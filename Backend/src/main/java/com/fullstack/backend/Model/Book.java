@@ -15,11 +15,12 @@ import lombok.NoArgsConstructor;
 public class Book {
 
     @Id
-    private long bid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    private String bname;
+    private String title;
 
-    private String bauthor;
+    private String author;
 
     private String description;
 
@@ -27,7 +28,7 @@ public class Book {
 
     private  int available;
 
-    private String Categories;
+    private String category;
 
     private String imgName;
 
