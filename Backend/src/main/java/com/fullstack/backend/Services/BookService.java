@@ -18,5 +18,9 @@ public class BookService {
         return  bookRepo.findAll();
     }
 
+    public List<Book> findByCategoryId(long id){
+        return bookRepo.findBookByCategory_Id(id);
+    }
+
 
 }

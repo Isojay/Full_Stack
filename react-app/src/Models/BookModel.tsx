@@ -6,6 +6,7 @@ class BookModel {
   copies?: number;
   available?: number;
   category?: string;
+  categoryId?: number;
   imgName?: string;
 
   constructor(
@@ -16,6 +17,7 @@ class BookModel {
     copies: number,
     available: number,
     category: string,
+    categoryId: number,
     imgName: string
   ) {
     this.id = id;
@@ -25,6 +27,8 @@ class BookModel {
     this.copies = copies;
     this.available = available;
     this.category = category;
+    this.categoryId = categoryId;
+
     this.imgName = imgName;
   }
 }

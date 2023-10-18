@@ -35,7 +35,7 @@ export const SearchPage = () => {
           description: responseData[key].description,
           copies: responseData[key].copies,
           available: responseData[key].available,
-          category: responseData[key].category,
+          category: responseData[key].category.cname,
           imgName: responseData[key].imgName,
         });
       }
