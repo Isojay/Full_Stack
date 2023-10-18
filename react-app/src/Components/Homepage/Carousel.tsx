@@ -2,6 +2,7 @@ import React from "react";
 import { ListCarousel } from "./ListCarousel";
 import BookModel from "../../Models/BookModel";
 import { useState, useEffect } from "react";
+import { SpinnerLoading } from "../../utils/spinner";
 
 export const Carousel = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ export const Carousel = () => {
 
       const responseJson = await response.json();
 
-      const responseData = responseJson._embedded.books;
+      const responseData = responseJson;
 
       const bookLoaded: BookModel[] = [];
 
@@ -34,11 +35,17 @@ export const Carousel = () => {
           description: responseData[key].description,
           copies: responseData[key].copies,
           available: responseData[key].available,
-          imgName: responseData[key].imgName,
+          category: responseData[key].category,
+          imgName: responseData[key].imgName
         });
       }
 
+      console.log(bookLoaded);
+
       setBooks(bookLoaded);
+
+      console.log(books);
+
       setIsLoading(false);
     };
     fetchBooks().catch((error: any) => {
@@ -50,7 +57,7 @@ export const Carousel = () => {
   if (isLoading) {
     return (
       <div className="container m-5">
-        <p>Loading.....</p>
+        <SpinnerLoading/>
       </div>
     );
   }
@@ -75,21 +82,21 @@ export const Carousel = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <div className="row d-flex justify-content-center align-items-center">
-              {books.splice(0, 3).map((book) => (
+              {books.slice(0, 3).map((book) => (
                 <ListCarousel book={book} key={book.id} />
               ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-              {books.splice(3, 6).map((book) => (
+              {books.slice(3, 6).map((book) => (
                 <ListCarousel book={book} key={book.id} />
               ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-              {books.splice(6, 9).map((book) => (
+              {books.slice(6, 9).map((book) => (
                 <ListCarousel book={book} key={book.id} />
               ))}
             </div>
