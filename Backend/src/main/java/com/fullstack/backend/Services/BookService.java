@@ -4,6 +4,8 @@ package com.fullstack.backend.Services;
 import com.fullstack.backend.Model.Book;
 import com.fullstack.backend.Repositories.BookRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,14 @@ public class BookService {
 
     public List<Book> findByCategoryId(long id){
         return bookRepo.findBookByCategory_Id(id);
+    }
+
+    public Page<Book> findCategoryIDPageSize(long id, Pageable pageable){
+        return  bookRepo.findBookByCategory_Id(id,pageable);
+    }
+
+    public Page<Book> findByPageSize( Pageable pageable){
+        return  bookRepo.findAll(pageable);
     }
 
 

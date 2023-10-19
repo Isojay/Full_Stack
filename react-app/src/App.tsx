@@ -8,13 +8,15 @@ import { Heros } from './Components/Homepage/heros'
 import { ContactAd } from './Components/Homepage/ContactAd'
 import { Footer } from './NavbarAndFooter/footer'
 import { Homepage } from './Components/homepage'
+import { SearchPage } from './Components/SearchBooksPage'
 
 
 function App() {
   return (
     <>
       <Navbar/>
-      <Homepage/>
+      {/* <Homepage/> */}
+      <SearchPage/>
       <Footer/>
     </>
   )
