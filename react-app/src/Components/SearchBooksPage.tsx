@@ -3,7 +3,7 @@ import BookModel from "../Models/BookModel";
 import { useState, useEffect } from "react";
 import { SpinnerLoading } from "../utils/spinner";
 import { SearchBook } from "./Search/SearchBookIndividual";
-import { Pagination } from "./Pagination/pagination";
+import { Pagination } from "../utils/pagination";
 import CategoryModel from "../Models/CategoryModel";
 
 export const SearchPage = () => {
@@ -15,17 +15,27 @@ export const SearchPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [booksPerPage, setBooksPerPage] = useState(5);
   const [totalBooks, setTotalBooks] = useState(0);
-  const [firstPage, setFirstPage] = useState(true);
-  const [lastPage, setLastPage] = useState(false);
+  // const [firstPage, setFirstPage] = useState(true);
+  // const [lastPage, setLastPage] = useState(false);
+  const [searchKeyword ,setSearchKeyword] = useState("");
+  const [searchUrl ,setSearchUrl] = useState("");
+  const [catId ,setCatId] = useState(0);
 
   useEffect(() => {
     const fetchBooks = async () => {
       const baseUrl: string = "http://localhost:8080/api/books";
 
-      const url: string = `${baseUrl}?page=${
-        currentPage - 1
-      }&size=${booksPerPage}`;
+      let url: string = '';
 
+      if(searchUrl == ""){
+        url = `${baseUrl}?page=${
+        currentPage - 1
+      }&size=${booksPerPage}`
+      }else{
+        url = baseUrl + searchUrl;
+      }
+
+      console.log(url)
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -40,8 +50,8 @@ export const SearchPage = () => {
       setCurrentPage(responseJson.number + 1);
       setBooksPerPage(responseJson.size);
       setTotalPages(responseJson.totalPages);
-      setFirstPage(responseJson.first);
-      setLastPage(responseJson.Last);
+      // setFirstPage(responseJson.first);
+      // setLastPage(responseJson.Last);
 
       //For the content of the Book
       const responseData = responseJson.content;
@@ -73,7 +83,8 @@ export const SearchPage = () => {
         "http://localhost:8080/api/books/category"
       );
 
-      const category_Data = await responseCategory.json();
+      const category_Json = await responseCategory.json();
+      const category_Data = category_Json.content;
 
       const categoryLoaded: CategoryModel[] = [];
 
@@ -90,7 +101,9 @@ export const SearchPage = () => {
       setIsLoading(false);
       setErrorMsg(error.message);
     });
-  }, [currentPage]);
+
+    window.scrollTo(0,0);
+  }, [currentPage, searchUrl ]);
 
   let lastItem =
     booksPerPage * currentPage <= totalBooks
@@ -114,8 +127,30 @@ export const SearchPage = () => {
     );
   }
 
+  function searchHandler() {
+    if (searchKeyword === "") {
+      setSearchUrl("");
+    } else {
+      setSearchUrl(`?keyword=${searchKeyword}&page=${currentPage - 1}&size=${booksPerPage}`);   
+    }
+  }
+
+  function resetHandler(){
+    setSearchUrl("");
+    setSearchKeyword("")
+    setCatId(0)
+  }
+
+  function categoryHandler(id :number){   
+
+    setCatId(id)
+      setSearchUrl(`?id=${catId}&page=${currentPage - 1}&size=${booksPerPage}`); 
+  }
+  
+
   return (
     <>
+    
       <div className="container">
         <div>
           <div className="row mt-5">
@@ -126,8 +161,13 @@ export const SearchPage = () => {
                   type="search"
                   placeholder="Search"
                   aria-labelledby="Search"
+                  onChange={e => setSearchKeyword(e.target.value)}
+                  value={searchKeyword}
                 />
-                <button className="btn btn-outline-success">Search</button>
+                <button className="btn btn-outline-success"
+                onClick={() => searchHandler()}>Search</button>
+                <button className="btn btn-outline-success marginLeft"
+                onClick={() => resetHandler() }>Reset</button>
               </div>
             </div>
             <div className="col-4">
@@ -144,8 +184,9 @@ export const SearchPage = () => {
                 <ul
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuButton1"
+                  style={{ maxHeight: "200px", overflowY: "auto" }} 
                 >
-                  <li>
+                  <li onClick={() => searchHandler()}>
                     <a className="dropdown-item" href="#">
                       All
                     </a>
@@ -153,9 +194,13 @@ export const SearchPage = () => {
                   {category.map((category) => (
                     <li
                       key={category.id}
-                      onClick={() => console.log(category.cname)}
+                      
                     >
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#" onClick={() => {
+                        setCatId(category.id);
+                        categoryHandler(category.id);
+                        console.log(catId);
+                      }}>
                         {category.cname}
                       </a>
                     </li>
@@ -167,8 +212,8 @@ export const SearchPage = () => {
           <div className="mt-3">
             <h5>Number of Results : {totalBooks}</h5>
           </div>
-          <p>
-            {(currentPage - 1) * booksPerPage} to {currentPage * booksPerPage}{" "}
+          {totalBooks > 0 ?(<><p>
+            {(currentPage - 1) * booksPerPage + 1 } to {currentPage * booksPerPage}{" "}
             of {totalBooks} Items:
           </p>
           {books.map((book) => (
@@ -180,7 +225,7 @@ export const SearchPage = () => {
               totalPages={totalPages}
               paginate={paginate}
             />
-          )}
+          )}</>): <><p>Search Item Not Found. <br/>Try Again.</p></>}
         </div>
       </div>
     </>

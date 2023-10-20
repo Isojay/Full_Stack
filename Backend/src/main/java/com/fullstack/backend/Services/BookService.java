@@ -32,5 +32,13 @@ public class BookService {
         return  bookRepo.findAll(pageable);
     }
 
+    public Page<Book> findByKeyword(String title, Pageable pageable){
+        return bookRepo.findBookByTitleIsContainingIgnoreCase(title ,pageable);
+    }
+
+    public Page<Book> findByKeywordWithAuthor(String title, String author, Pageable pageable){
+        return bookRepo.findBookByTitleIsContainingIgnoreCaseOrAuthorContainingIgnoreCase(title, title ,pageable);
+    }
+
 
 }

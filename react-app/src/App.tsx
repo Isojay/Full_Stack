@@ -17,6 +17,7 @@ function App() {
       <Navbar/>
       {/* <Homepage/> */}
       <SearchPage/>
+      <br/>
       <Footer/>
     </>
   )

@@ -56,3 +56,7 @@ background-color: #0e76a8 ;
  .custom-width-80 {
     width: 90%;
   }
+
+  .marginLeft {
+    margin-left: 10px; /* Adjust the margin value as needed */
+}
