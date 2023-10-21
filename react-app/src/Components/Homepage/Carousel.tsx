@@ -3,6 +3,7 @@ import { ListCarousel } from "./ListCarousel";
 import BookModel from "../../Models/BookModel";
 import { useState, useEffect } from "react";
 import { SpinnerLoading } from "../../utils/spinner";
+import { Link } from "react-router-dom";
 
 export const Carousel = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +16,7 @@ export const Carousel = () => {
 
       const url: string = `${baseUrl}?page=0&size=9`;
 
-      const response = await fetch(baseUrl);
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error("Something went wrong !!");
@@ -23,11 +24,13 @@ export const Carousel = () => {
 
       const responseJson = await response.json();
 
-      const responseData = responseJson;
+      const responseData = responseJson.content;
 
       const bookLoaded: BookModel[] = [];
 
       for (const key in responseData) {
+        const category = responseData[key].category;
+
         bookLoaded.push({
           id: responseData[key].id,
           title: responseData[key].title,
@@ -35,16 +38,14 @@ export const Carousel = () => {
           description: responseData[key].description,
           copies: responseData[key].copies,
           available: responseData[key].available,
-          category: responseData[key].category.cname,
-          imgName: responseData[key].imgName
+          category: category.cname,
+          categoryId: category.id,
+          imgName: responseData[key].imgName,
         });
       }
 
-      console.log(bookLoaded);
 
       setBooks(bookLoaded);
-
-      console.log(books);
 
       setIsLoading(false);
     };
@@ -135,9 +136,9 @@ export const Carousel = () => {
         </div>
       </div>
       <div className="homepage-carousel-title mt-3">
-        <a className="btn btn-outline-secondary btn-lg" href="#">
+        <Link className="btn btn-outline-secondary btn-lg" to="/home">
           View More
-        </a>
+        </Link>
       </div>
     </div>
   );

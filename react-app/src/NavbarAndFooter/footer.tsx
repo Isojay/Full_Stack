@@ -12,7 +12,7 @@ export const Footer = () => {
                         </a>
                     </li>
                     <li className='nav-item'>
-                        <a href='#' className='nav-link px-2 text-white'>
+                        <a href='/search' className='nav-link px-2 text-white'>
                             Search Books
                         </a>
                     </li>
