@@ -12,7 +12,7 @@ function Navbar (){
     <>
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid custom-width-80">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           Navbar
         </a>
         <button

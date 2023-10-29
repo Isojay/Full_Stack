@@ -6,6 +6,7 @@ import { Footer } from "./NavbarAndFooter/footer";
 import { HomePage } from "./Components/homepage";
 import { SearchPage } from "./Components/SearchBooksPage";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { BookCheckout } from "./Components/BookCheckout/BookCheckout";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
             </Route>
             <Route path="/search">
               <SearchPage />
+            </Route>
+            <Route path="/viewDetails/:id">
+              <BookCheckout />
             </Route>
           </Switch>
         </div>

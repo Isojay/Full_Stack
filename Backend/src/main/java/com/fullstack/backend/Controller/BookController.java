@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -35,6 +35,13 @@ public class BookController {
     public Page<Category> findCategory(){
         Pageable pageable = PageRequest.of(0,100, Sort.by("cname").ascending());
         return repo.findAll(pageable);
+    }
+
+    @GetMapping("/bookById/{id}")
+    public Optional<Book> findById(@PathVariable long id){
+
+        return bookService.findById(id);
+
     }
 
     @GetMapping
