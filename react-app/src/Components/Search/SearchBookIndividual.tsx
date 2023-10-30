@@ -1,8 +1,8 @@
 import React from "react";
 import BookModel from "../../Models/BookModel";
 import image from "../../Images/BooksImages/book-luv2code-1000.png";
-import { NavLink } from "react-router-dom";
-import { BookCheckout } from "../BookCheckout/BookCheckout";
+import { Link, NavLink } from "react-router-dom";
+import { BookCheckout } from "../BookDetail/BookDetail";
 
 export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
   return (
@@ -46,9 +46,9 @@ export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
             </div>
           </div>
           <div className="col-md-4 d-flex justify-content-center align-items-center">
-            <NavLink className="btn btn-md main-color text-white"  to={`/viewDetails/${props.book.id}`} >
+            <Link className="btn btn-md btn-primary text-white"  to={`/viewDetails/${props.book.id}`} >
               View Details
-            </NavLink>
+            </Link>
           </div>
         </div>
       </div>

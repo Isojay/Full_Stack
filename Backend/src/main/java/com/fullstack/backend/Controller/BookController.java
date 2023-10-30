@@ -39,7 +39,6 @@ public class BookController {
 
     @GetMapping("/bookById/{id}")
     public Optional<Book> findById(@PathVariable long id){
-
         return bookService.findById(id);
 
     }
@@ -56,7 +55,6 @@ public class BookController {
             return bookService.findByPageSize(pageable);
         }
         if (keyword != null) {
-            log.info(keyword); // Log the keyword instead
             return bookService.findByKeywordWithAuthor(keyword,keyword, pageable);
         }
         return bookService.findCategoryIDPageSize(id, pageable);

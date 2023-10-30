@@ -3,6 +3,8 @@ import BookModel from "../../Models/BookModel";
 import { SpinnerLoading } from "../../utils/spinner";
 import image from "../../Images/BooksImages/book-luv2code-1000.png";
 import { useParams } from "react-router-dom";
+import { StarsReview } from "./StarReview";
+import { CheckoutAndReviewBox } from "./SideUserBar";
 
 export const BookCheckout = () => {
   const [book, SetBook] = useState<BookModel>();
@@ -75,8 +77,10 @@ export const BookCheckout = () => {
               <h2>{book?.title}</h2>
               <h5 className="text-primary">{book?.author}</h5>
               <p className="lead">{book?.description}</p>
+              <StarsReview rating={4.5} size={32}/>
             </div>
           </div>
+          <CheckoutAndReviewBox book={book} mobile={false}/>
         </div>
         <hr />
       </div>
@@ -93,8 +97,10 @@ export const BookCheckout = () => {
             <h2>{book?.title}</h2>
             <h5 className="text-primary">{book?.author}</h5>
             <p className="lead">{book?.description}</p>
+            <StarsReview rating={4.5} size={32}/>
           </div>
         </div>
+        <CheckoutAndReviewBox book={book} mobile={true}/>
         <hr />
       </div>
     </div>
