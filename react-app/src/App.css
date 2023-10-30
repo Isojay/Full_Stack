@@ -65,3 +65,7 @@
 .btn-primary:hover {
   filter: brightness(90%);
 }
+.card.custom-width-60 {
+  max-width: 30%; 
+  margin: 0 auto; 
+}

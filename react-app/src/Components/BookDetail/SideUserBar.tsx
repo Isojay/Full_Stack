@@ -4,7 +4,7 @@ import BookModel from "../../Models/BookModel";
 
 export const CheckoutAndReviewBox: React.FC<{ book: BookModel | undefined, mobile: boolean, }> = (props) => {
     return (
-        <div className={props.mobile ? 'card d-flex mt-5' : 'card col-3 container d-flex mb-5'}>
+        <div className={props.mobile ? 'card d-flex mt-5' : 'card custom-width-60 container d-flex mb-5'}>
             <div className='card-body container'>
                 <div className='mt-3'>
                     <p>

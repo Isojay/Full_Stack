@@ -65,19 +65,24 @@ export const BookCheckout = () => {
     <div>
       <div className="container d-none d-lg-block">
         <div className="row mt-5">
-          <div className="col-sm-2 col-md-2">
+          <div className="col-sm-2 col-md-3">
             {book?.imgName ? (
               <img src={book?.imgName} width="226" height="349" alt="Book" />
             ) : (
               <img src={image} width="226" height="349" alt="Book" />
             )}
+            <p></p>
+              <StarsReview rating={4.5} size={32}/>
+              <p>
+
+                Rating : 4.5/5 - 20 votes.
+              </p>
           </div>
-          <div className="col-4 col-md-4 container">
+          <div className="col-4 col-md-4">
             <div className="ml-2">
               <h2>{book?.title}</h2>
               <h5 className="text-primary">{book?.author}</h5>
               <p className="lead">{book?.description}</p>
-              <StarsReview rating={4.5} size={32}/>
             </div>
           </div>
           <CheckoutAndReviewBox book={book} mobile={false}/>

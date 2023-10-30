@@ -20,7 +20,6 @@ public class BookService {
         return  bookRepo.findById(id);
     }
 
-
     public Page<Book> findCategoryIDPageSize(long id, Pageable pageable){
         return  bookRepo.findBookByCategory_Id(id,pageable);
     }
