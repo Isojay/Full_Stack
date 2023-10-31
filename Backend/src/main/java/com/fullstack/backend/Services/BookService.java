@@ -16,20 +16,20 @@ public class BookService {
 
     private final BookRepo bookRepo;
 
-    public Optional<Book> findById(long id){
-        return  bookRepo.findById(id);
+    public Optional<Book> findById(long id) {
+        return bookRepo.findById(id);
     }
 
-    public Page<Book> findCategoryIDPageSize(long id, Pageable pageable){
-        return  bookRepo.findBookByCategory_Id(id,pageable);
+    public Page<Book> findCategoryIDPageSize(long id, Pageable pageable) {
+        return bookRepo.findBookByCategory_Id(id, pageable);
     }
 
-    public Page<Book> findByPageSize( Pageable pageable){
-        return  bookRepo.findAll(pageable);
+    public Page<Book> findByPageSize(Pageable pageable) {
+        return bookRepo.findAll(pageable);
     }
 
-    public Page<Book> findByKeywordWithAuthor(String title, String author, Pageable pageable){
-        return bookRepo.findBookByTitleIsContainingIgnoreCaseOrAuthorContainingIgnoreCase(title, title ,pageable);
+    public Page<Book> findByKeywordWithAuthor(String title, String author, Pageable pageable) {
+        return bookRepo.findBookByTitleIsContainingIgnoreCaseOrAuthorContainingIgnoreCase(title, title, pageable);
     }
 
 

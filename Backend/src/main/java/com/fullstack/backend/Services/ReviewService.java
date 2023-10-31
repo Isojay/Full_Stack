@@ -21,10 +21,10 @@ public class ReviewService {
         return reviewRepo.findByBookId(bookID,pageable);
     }
 
-    public void saveReview(Review review){
-        review.setDate(new Date());
-        reviewRepo.save(review);
-    }
+//    public void saveReview(Review review){
+//        review.setDate(new Date());
+//        reviewRepo.save(review);
+//    }
 
 
 }

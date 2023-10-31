@@ -44,7 +44,6 @@ export const Carousel = () => {
         });
       }
 
-
       setBooks(bookLoaded);
 
       setIsLoading(false);
@@ -58,17 +57,17 @@ export const Carousel = () => {
   if (isLoading) {
     return (
       <div className="container m-5">
-        <SpinnerLoading/>
+        <SpinnerLoading />
       </div>
     );
   }
-    if (errorMSG){
-      return(
-          <div className="container m-5">
-              <p>{errorMSG}</p>
-          </div>
-      )
-    }
+  if (errorMSG) {
+    return (
+      <div className="container m-5">
+        <p>{errorMSG}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5" style={{ height: 550 }}>

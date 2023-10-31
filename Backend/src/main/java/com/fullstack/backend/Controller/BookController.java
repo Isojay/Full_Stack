@@ -26,11 +26,6 @@ public class BookController {
     private final BookService bookService;
     private final CategoryRepo repo;
 
-//    @GetMapping
-//    public List<Book> findAll(){
-//        return bookService.findAll();
-//    }
-
     @GetMapping("/category")
     public Page<Category> findCategory(){
         Pageable pageable = PageRequest.of(0,100, Sort.by("cname").ascending());

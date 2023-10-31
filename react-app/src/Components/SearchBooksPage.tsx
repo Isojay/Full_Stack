@@ -132,7 +132,7 @@ export const SearchPage = () => {
     if (searchKeyword === "") {
       setSearchUrl("");
     } else {
-      const encodedSearchKeyword :string = encodeURIComponent(searchKeyword);
+      const encodedSearchKeyword: string = encodeURIComponent(searchKeyword);
       console.log(encodedSearchKeyword);
       setSearchUrl(
         `?keyword=${encodedSearchKeyword}&page=<pageNumber>&size=${booksPerPage}`

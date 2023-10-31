@@ -24,14 +24,14 @@ public class Book {
 
     private String description;
 
-    private  int copies;
+    private int copies;
 
-    private  int available;
+    private int available;
 
     private String imgName;
 
     @ManyToOne
-    @JoinColumn(name="Category_id")
+    @JoinColumn(name = "Category_id")
     private Category category;
 
 
