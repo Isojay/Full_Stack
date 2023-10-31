@@ -1,8 +1,7 @@
 import React from "react";
 import BookModel from "../../Models/BookModel";
 import image from "../../Images/BooksImages/book-luv2code-1000.png";
-import { Link, NavLink } from "react-router-dom";
-import { BookCheckout } from "../BookDetail/BookDetail";
+import { Link } from "react-router-dom";
 
 export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
   return (

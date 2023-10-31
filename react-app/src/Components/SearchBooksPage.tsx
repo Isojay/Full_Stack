@@ -1,4 +1,3 @@
-import React, { useCallback } from "react";
 import BookModel from "../Models/BookModel";
 import { useState, useEffect } from "react";
 import { SpinnerLoading } from "../utils/spinner";
@@ -133,8 +132,10 @@ export const SearchPage = () => {
     if (searchKeyword === "") {
       setSearchUrl("");
     } else {
+      const encodedSearchKeyword :string = encodeURIComponent(searchKeyword);
+      console.log(encodedSearchKeyword);
       setSearchUrl(
-        `?keyword=${searchKeyword}&page=<pageNumber>&size=${booksPerPage}`
+        `?keyword=${encodedSearchKeyword}&page=<pageNumber>&size=${booksPerPage}`
       );
     }
     setCategoryName("Category");

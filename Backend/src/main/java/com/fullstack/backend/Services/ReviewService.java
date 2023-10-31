@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
 import java.util.Date;
 
 @Service
@@ -22,7 +22,7 @@ public class ReviewService {
     }
 
     public void saveReview(Review review){
-        review.setDate(LocalDateTime.now());
+        review.setDate(new Date());
         reviewRepo.save(review);
     }
 
