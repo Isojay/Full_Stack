@@ -1,6 +1,7 @@
 import React from "react";
 import image from "../../Images/BooksImages/book-luv2code-1000.png";
 import BookModel from "../../Models/BookModel";
+import {Link} from "react-router-dom";
 
 export const ListCarousel: React.FC<{ book: BookModel }> = (props) => {
   return (
@@ -13,9 +14,9 @@ export const ListCarousel: React.FC<{ book: BookModel }> = (props) => {
         )}
         <h6 className="mt-2">{props.book.title}</h6>
         <p>{props.book.author || "Luv2Code"}</p>
-        <a className="btn main-color text-white" href="#">
+        <Link className="btn main-color btn-primary text-white" to={`/viewDetails/${props.book.id}`}>
           Reserve
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import React from "react";
+import {useOktaAuth} from "@okta/okta-react";
+import {SpinnerLoading} from "../utils/spinner";
+
 
 function Navbar() {
+
+  const {oktaAuth ,authState} = useOktaAuth();
+
+  if(!authState){
+    return <SpinnerLoading/>
+  }
+
+  const handleLogout = async () => oktaAuth.signOut();
+
+  console.log(authState);
 
   return (
     <>
@@ -47,9 +61,15 @@ function Navbar() {
                 Search
               </button>
             </form>
-            <a className="btn btn-secondary text-white m-2" href="#">
-              Sign In
-            </a>
+            {authState.isAuthenticated ?
+                <button className="btn btn-secondary text-white m-2" onClick={handleLogout}>
+                  Log Out
+                </button>:
+                <Link className="btn btn-secondary text-white m-2" to="/login" onClick={()=> console.log("clicked")}>
+                  Sign In
+                </Link>
+            }
+
           </div>
         </div>
       </nav>

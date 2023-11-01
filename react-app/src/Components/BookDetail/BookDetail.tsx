@@ -101,6 +101,7 @@ export const BookCheckout = () => {
       setIsLoadingReview(false);
       setErrorMsg(error.message);
     });
+    window.scrollTo(0, 0);
   }, []);
 
   if (isLoading || isLoadingReview) {
@@ -114,7 +115,6 @@ export const BookCheckout = () => {
       </div>
     );
   }
-  console.log(totalStars);
   return (
     <div>
       <div className="container d-none d-lg-block">

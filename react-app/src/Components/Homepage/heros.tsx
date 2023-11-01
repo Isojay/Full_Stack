@@ -1,5 +1,15 @@
+import {Link} from "react-router-dom";
+import {useOktaAuth} from "@okta/okta-react";
+import {SpinnerLoading} from "../../utils/spinner";
+import React from "react";
 
 export const Heros = () => {
+    const {authState} = useOktaAuth();
+
+    if(!authState){
+        return <SpinnerLoading/>
+    }
+
     return (
         <div className="container-fluid  custom-width-80">
             <div className='d-none d-lg-block'>
@@ -15,7 +25,11 @@ export const Heros = () => {
                                 Whether it is to learn a new skill or grow within one,
                                 we will be able to provide the top content for you!
                             </p>
-                            <a className='btn main-color btn-lg text-white' href='#'>Sign up</a>
+                            {
+                           authState.isAuthenticated?  <Link type="button" className="btn main-color btn-lg text-white" to="/search">Explore Top Books.</Link>: <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
+                        }
+
+
                         </div>
                     </div>
                 </div>
@@ -52,6 +66,7 @@ export const Heros = () => {
                                 we will be able to provide the top content for you!
                             </p>
                             <a className='btn main-color btn-lg text-white' href='#'>Sign up</a>
+                            <Link type="button" className="btn main-color btn-lg text-white" to="/search">Explore Top Books.</Link>
                         </div>
                     </div>
                     <div className='m-2'>
