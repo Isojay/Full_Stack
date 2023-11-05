@@ -1,6 +1,5 @@
 package com.fullstack.backend.Controller;
 
-
 import com.fullstack.backend.Model.Book;
 import com.fullstack.backend.Model.Category;
 import com.fullstack.backend.Repositories.CategoryRepo;
@@ -11,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -55,7 +56,34 @@ public class BookController {
         return bookService.findCategoryIDPageSize(id, pageable);
     }
 
+    @PutMapping("/secure/checkout")
+    public ResponseEntity<?> getByEmailAndId(@RequestParam long id) {
+        String email = "test@gmail.com";
+        try {
+            Book book = bookService.bookCheckout(email, id);
+            return ResponseEntity.ok(book); // Return the book object as a success response
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("An error occurred: " + errorMessage); // Return an error message as an error response
+        }
+    }
+    @GetMapping("/secure/checkout/byUser")
+    public  boolean checkUserCart(@RequestParam long id){
+        String email = "test@gmail.com";
+        return bookService.userCart(email,id);
+    }
 
+    @GetMapping("/secure/checkout")
+    public int userCartSize(){
+        String email = "test@gmail.com";
+        return bookService.userCartSize(email);
 
+    }
 
 }
+
+
+
+
+
