@@ -75,9 +75,8 @@ public class BookService {
     }
 
     public int userCartSize(String email) {
-        int validate = checkOutRepo.findByUserEmailIgnoreCase(email).size();
 
-        return validate;
+        return checkOutRepo.findByUserEmailIgnoreCase(email).size();
 
     }
 
