@@ -1,9 +1,9 @@
-import BookModel from "../Models/BookModel";
+import BookModel from "../../Models/BookModel";
 import { useState, useEffect } from "react";
-import { SpinnerLoading } from "../utils/spinner";
-import { SearchBook } from "./Search/SearchBookIndividual";
-import { Pagination } from "../utils/pagination";
-import CategoryModel from "../Models/CategoryModel";
+import { SpinnerLoading } from "../../utils/spinner";
+import { SearchBook } from "./SearchBookIndividual";
+import { Pagination } from "../../utils/pagination";
+import CategoryModel from "../../Models/CategoryModel";
 
 export const SearchPage = () => {
   const [isLoading, setIsLoading] = useState(true);

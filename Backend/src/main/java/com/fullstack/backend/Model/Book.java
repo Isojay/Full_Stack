@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,6 +35,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "Category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private Set<Review> reviews;
 
 
 }

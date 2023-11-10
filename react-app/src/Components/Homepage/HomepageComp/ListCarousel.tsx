@@ -1,6 +1,6 @@
 import React from "react";
 import image from "../../Images/BooksImages/book-luv2code-1000.png";
-import BookModel from "../../Models/BookModel";
+import BookModel from "../../../Models/BookModel";
 import {Link} from "react-router-dom";
 
 export const ListCarousel: React.FC<{ book: BookModel }> = (props) => {

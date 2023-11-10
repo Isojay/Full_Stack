@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React from "react";
 import {useOktaAuth} from "@okta/okta-react";
-import {SpinnerLoading} from "../../utils/spinner";
+import {SpinnerLoading} from "../../../utils/spinner";
 
 
 export const ContactAd = () => {

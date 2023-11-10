@@ -1,8 +1,8 @@
 import "./App.css";
 import Navbar from "./NavbarAndFooter/navbar";
 import { Footer } from "./NavbarAndFooter/footer";
-import { HomePage } from "./Components/homepage";
-import { SearchPage } from "./Components/SearchBooksPage";
+import { HomePage } from "./Components/Homepage/homepage";
+import { SearchPage } from "./Components/Search/SearchBooksPage";
 import { Redirect, Route, Switch , useHistory } from "react-router-dom";
 import { BookCheckout } from "./Components/BookDetail/BookDetail";
 import {oktaConfig} from "./lib/okta-config";

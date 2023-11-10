@@ -9,5 +9,7 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
 
     Page<Review> findByBookId(long id, Pageable pageable);
 
+    Review findByUserEmailContainingIgnoreCaseAndBookId(String email, Long id);
+
 
 }

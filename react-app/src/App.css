@@ -69,3 +69,12 @@
   max-width: 30%;
   margin: 0 auto;
 }
+
+
+input[type=radio]{
+  display: none;
+}
+
+.star {
+  cursor: pointer;
+}

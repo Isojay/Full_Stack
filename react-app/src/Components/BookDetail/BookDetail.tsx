@@ -10,6 +10,7 @@ import { Reviews } from "./Review/ReviewHandler";
 import { useOktaAuth } from "@okta/okta-react";
 import { Simulate } from "react-dom/test-utils";
 import error = Simulate.error;
+import ReviewRequestModel from "../../Models/ReviewRequesModel";
 
 export const BookCheckout = () => {
   const { authState } = useOktaAuth();
@@ -24,13 +25,16 @@ export const BookCheckout = () => {
   const [totalReviews, setTotalReviews] = useState(0);
   const [isReviewLoading, setIsReviewLoading] = useState(true);
 
+  const [userReviewStatus, setUserReviewStatus] = useState(false);
+  const [isUserReviewStatusLoading, setIsReviewStatusLoading] = useState(true);
+
   const [userLoan, setUserLoan] = useState(0);
   const [isUserLoanLoading, setIsUserLoanLoading] = useState(true);
 
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   const [isCheckedOutLoading, setIsCheckedOutLoading] = useState(true);
 
-  useEffect(() => {}, []);
+  const [submitted , setSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchCheckOutCondition = async () => {
@@ -135,6 +139,7 @@ export const BookCheckout = () => {
         //Format date in such a way this only Date is shown
         const date = new Date(reviewData[key].date);
         const formattedDate = date.toISOString().split("T")[0];
+
         loadReview.push({
           id: reviewData[key].id,
           userEmail: reviewData[key].userEmail,
@@ -157,18 +162,48 @@ export const BookCheckout = () => {
       SetReviews(loadReview);
       setIsReviewLoading(false);
     };
+
     fetchReviews().catch((error: any) => {
       setIsReviewLoading(false);
       setErrorMsg(error.message);
     });
     window.scrollTo(0, 0);
-  }, []);
+  }, [userReviewStatus]);
+
+  useEffect(() => {
+    const fetchUserReviewStatus = async () => {
+      if (authState && authState.isAuthenticated) {
+        const url: string = `http://localhost:8080/api/reviews/secure/userReviewStatus?bookId=${id}`;
+        const requestOptions = {
+          method: "Get",
+          headers: {
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            "Content-type": "application/json",
+          },
+        };
+        const userReviewStatus = await fetch(url, requestOptions);
+
+        if (!userReviewStatus.ok) {
+          throw new Error("Somthing went wrong!!!");
+        }
+
+        const userReviewStatusJson = await userReviewStatus.json();
+        setUserReviewStatus(userReviewStatusJson);
+      }
+      setIsReviewStatusLoading(false);
+    };
+    fetchUserReviewStatus().catch((error: any) => {
+      setIsReviewStatusLoading(false);
+      setErrorMsg(error.message);
+    });
+  }, [authState]);
 
   if (
     isLoading ||
     isReviewLoading ||
     isUserLoanLoading ||
-    isCheckedOutLoading
+    isCheckedOutLoading ||
+    isUserReviewStatusLoading
   ) {
     return <SpinnerLoading />;
   }
@@ -195,6 +230,32 @@ export const BookCheckout = () => {
       throw new Error("Something Went Wrong !!");
     }
     setIsCheckedOut(true);
+  }
+
+  async function submitReview(rating: number, reviewDescription: string) {
+    const bookId: any = id;
+    const reviewRequestModel = new ReviewRequestModel(
+      rating,
+      bookId,
+      reviewDescription
+    );
+
+    const url = `http://localhost:8080/api/reviews/secure/addUserReview`;
+    const requestOptions = {
+      method: "Post",
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(reviewRequestModel),
+    };
+
+    const reviewResponse = await fetch(url, requestOptions);
+    if (!reviewResponse.ok) {
+      throw new Error("Something Went Wrong !!");
+    }
+
+    setUserReviewStatus(true);
   }
 
   return (
@@ -227,7 +288,8 @@ export const BookCheckout = () => {
             checkOutCondition={isCheckedOut}
             isAuthenticated={authState?.isAuthenticated}
             checkOutBook={checkoutBook}
-          />
+            userReviewStatus={userReviewStatus} 
+            submitReview={submitReview}          />
         </div>
         <hr />
         <Reviews reviews={reviews} mobile={false} />
@@ -255,7 +317,8 @@ export const BookCheckout = () => {
           checkOutCondition={isCheckedOut}
           isAuthenticated={authState?.isAuthenticated}
           checkOutBook={checkoutBook}
-        />
+          userReviewStatus={userReviewStatus}
+          submitReview={submitReview}        />
         <hr />
         <Reviews reviews={reviews} mobile={true} />
       </div>

@@ -1,15 +1,15 @@
 import { NavLink, Link } from "react-router-dom";
 import React from "react";
-import {useOktaAuth} from "@okta/okta-react";
-import {SpinnerLoading} from "../utils/spinner";
-
+import { useOktaAuth } from "@okta/okta-react";
+import { SpinnerLoading } from "../utils/spinner";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 function Navbar() {
+  const { oktaAuth, authState } = useOktaAuth();
 
-  const {oktaAuth ,authState} = useOktaAuth();
-
-  if(!authState){
-    return <SpinnerLoading/>
+  if (!authState) {
+    return <SpinnerLoading />;
   }
 
   const handleLogout = async () => oktaAuth.signOut();
@@ -61,19 +61,46 @@ function Navbar() {
                 Search
               </button>
             </form>
-            {authState.isAuthenticated ?
-                <button className="btn btn-secondary text-white m-2" onClick={handleLogout}>
-                  Log Out
-                </button>:
-                <Link className="btn btn-secondary text-white m-2" to="/login" onClick={()=> console.log("clicked")}>
-                  Sign In
-                </Link>
-            }
 
+            {/* <Nav>
+              <NavDropdown
+                id="nav-dropdown-dark-example"
+                title="Dropdown"
+                menuVariant="dark"
+              >
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">
+                  Something
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav> */}
+
+            {authState.isAuthenticated ? (
+              <button
+                className="btn btn-secondary text-white m-2"
+                onClick={handleLogout}
+              >
+                Log Out
+              </button>
+            ) : (
+              <Link
+                className="btn btn-secondary text-white m-2"
+                to="/login"
+                onClick={() => console.log("clicked")}
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </nav>
-
     </>
   );
 }

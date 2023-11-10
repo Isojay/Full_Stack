@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {useOktaAuth} from "@okta/okta-react";
-import {SpinnerLoading} from "../../utils/spinner";
+import {SpinnerLoading} from "../../../utils/spinner";
 import React from "react";
 
 export const Heros = () => {
