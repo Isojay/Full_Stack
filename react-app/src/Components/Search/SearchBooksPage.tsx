@@ -12,7 +12,7 @@ export const SearchPage = () => {
   const [category, setCategory] = useState<CategoryModel[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [booksPerPage, setBooksPerPage] = useState(3);
+  const [booksPerPage, setBooksPerPage] = useState(5);
   const [totalBooks, setTotalBooks] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchUrl, setSearchUrl] = useState("");
