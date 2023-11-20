@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.okta.spring.boot.oauth.Okta;
 import org.springframework.web.accept.ContentNegotiationStrategy;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -22,10 +23,16 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/api/books/secure/**",
-                                        "/api/reviews/secure/**")
+                                .requestMatchers(
+                                        "/api/books/secure/**",
+                                        "/api/reviews/secure/**",
+                                        "api/secure/**"
+                                )
                                 .authenticated()
-                                .requestMatchers("/api/books/**", "/api/reviews/**").permitAll())
+                                .requestMatchers(
+                                        "/api/books/**",
+                                        "/api/reviews/**"
+                                ).permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
                 );

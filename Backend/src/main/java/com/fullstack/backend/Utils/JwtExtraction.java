@@ -13,9 +13,9 @@ import java.util.Base64;
 public class JwtExtraction {
 
 
-    public  String extractSubject(String jwtToken){
+    public String extractSubject(String jwtToken) {
 
-       String token = jwtToken.substring(7);
+        String token = jwtToken.substring(7);
         String[] chunks = token.split("\\.");
 
         Base64.Decoder decoder = Base64.getUrlDecoder();

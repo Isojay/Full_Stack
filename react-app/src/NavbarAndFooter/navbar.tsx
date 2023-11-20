@@ -2,11 +2,12 @@ import { NavLink, Link } from "react-router-dom";
 import React, { Fragment } from "react";
 import { useOktaAuth } from "@okta/okta-react";
 import { SpinnerLoading } from "../utils/spinner";
-import Logo from "../Images/Logo.png";
+
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
+
 
 function Navbar() {
   const { oktaAuth, authState } = useOktaAuth();
@@ -21,9 +22,15 @@ function Navbar() {
     <>
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid custom-width-80">
-        <img src={Logo} width="50" height="50" className="d-inline-block align-top" alt=""/>
+          <img
+            src={"Logo.png"}
+            width="50"
+            height="50"
+            className="d-inline-block align-top"
+            alt=""
+          />
           <a className="navbar-brand m-2 " href="/">
-           Lorem Ipsum
+            Lorem Ipsum
           </a>
           <button
             className="navbar-toggler"
@@ -48,6 +55,13 @@ function Navbar() {
                   Search
                 </NavLink>
               </li>
+              {authState.isAuthenticated && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/shelf">
+                    Shelf
+                  </NavLink>
+                </li>
+              )}
             </ul>
             <form className="d-flex" role="search">
               <input
@@ -55,6 +69,7 @@ function Navbar() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                onChange={(e) => console.log(e.target.value)}
               />
               <button className="btn btn-outline-success" type="submit">
                 Search
@@ -137,12 +152,18 @@ function Navbar() {
                     </Menu.Items>
                   </Transition>
                 </Menu> */}
+                {/* <button
+                  className="btn btn-secondary text-white m-2"
+                  disabled
+                >
+                  Cart
+                </button> */}
                 <button
-                className="btn btn-secondary text-white m-2"
-                onClick={handleLogout}
-              >
-                Log Out
-              </button>
+                  className="btn btn-secondary text-white m-2"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </button>
               </div>
             ) : (
               <Link className="btn btn-secondary text-white m-2" to="/login">
