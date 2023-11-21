@@ -265,9 +265,11 @@ export const BookCheckout = () => {
         <div className="row mt-5">
           <div className="col-sm-2 col-md-3">
             {book?.imgName ? (
-              <img src={book?.imgName} width="226" height="349" alt="Book" />
+              <img src={`/${book?.imgName}`} width="226" height="349" alt="Book" />
+          
             ) : (
               <img src={image} width="226" height="349" alt="Book" />
+              // 
             )}
             <p></p>
             <StarsReview rating={totalStars} size={32} />

@@ -35,7 +35,6 @@ export const SearchPage = () => {
         url = baseUrl + pageChangBug;
       }
 
-      console.log(url);
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -138,7 +137,7 @@ export const SearchPage = () => {
         `?keyword=${encodedSearchKeyword}&page=<pageNumber>&size=${booksPerPage}`
       );
     }
-    setCategoryName("Category");
+    setCategoryName("All");
   }
 
   function resetHandler() {
@@ -183,6 +182,7 @@ export const SearchPage = () => {
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  style={{ minWidth: "125px" }}
                 >
                   {categoryName}
                 </button>

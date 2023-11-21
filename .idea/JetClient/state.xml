@@ -29,6 +29,10 @@
                       <option name="key" value="Content-Type" />
                       <option name="value" value="application/json" />
                     </headerState>
+                    <headerState>
+                      <option name="key" value="Authorization" />
+                      <option name="value" value="Bearer eyJraWQiOiJDOTFKeDBIUnN2NUE5bXhDdHBaY1JfV2U4RjAteGpIYnI2QU5CbGFmSDZjIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULmEtM3JGUzVwMHM2QkdlT1JzYzFPdlptakJKeFRqVGM1SGNZRDlsYW1YR1EiLCJpc3MiOiJodHRwczovL2Rldi0xODAyODAxOS5va3RhLmNvbS9vYXV0aDIvZGVmYXVsdCIsImF1ZCI6ImFwaTovL2RlZmF1bHQiLCJpYXQiOjE3MDA1NTA5OTcsImV4cCI6MTcwMDU1NDU5NywiY2lkIjoiMG9hZDF2Njl4dlF3c0NWUU01ZDciLCJ1aWQiOiIwMHVkMXY2NTVxZ3RUU2VuQjVkNyIsInNjcCI6WyJlbWFpbCIsInByb2ZpbGUiLCJvcGVuaWQiXSwiYXV0aF90aW1lIjoxNzAwNTUwOTk1LCJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSJ9.XLyWri6Q1vN6Pe2u5zLLgAT4RPbrIwG6Me_Wv7yU9koIYxqJ9VgN2EMNF-HG6DjEhjQx6Qhi4roYfmiNWNNHESEMaUon6uBwm3EvU5qGFf1RVkpAknf7_hdBj5lTxMYc5pKeYKU0_fGXdTIM7NflwniC9p18JQXOa9A_doxk4_UPVfUNchBjlOcs_ZuBvIpRucmVa5q_djhDbOTTI9tfGkH-iNXyYzS2KDiCfM9UvWdPsRj6L5GjcAed4ksLMCIwInL0OUFyeVg3RNn8xjraB_L4il99uILVgNwESEhVTYhrEfb43x70ohIhHkwP6DAwzPxNIBXo7Blori00hRurVA" />
+                    </headerState>
                   </list>
                 </option>
                 <option name="id" value="0962f2cd-c484-481f-9e00-6e7a7d8830e0" />
@@ -43,7 +47,7 @@
                     </queryParamState>
                   </list>
                 </option>
-                <option name="url" value="htt://localhost:8080/api/loans" />
+                <option name="url" value="htt://localhost:8080/api/secure/loans" />
               </requestState>
             </list>
           </option>
