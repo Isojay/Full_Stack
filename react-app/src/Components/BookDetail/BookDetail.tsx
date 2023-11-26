@@ -35,7 +35,6 @@ export const BookCheckout = () => {
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   const [isCheckedOutLoading, setIsCheckedOutLoading] = useState(true);
 
-  const [submitted , setSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchCheckOutCondition = async () => {

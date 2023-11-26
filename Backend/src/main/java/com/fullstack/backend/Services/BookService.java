@@ -51,7 +51,6 @@ public class BookService {
         book.get().setAvailable(book.get().getAvailable() - 1);
         bookRepo.save(book.get());
 
-
         CheckOut checkOut = CheckOut.builder()
                 .userEmail(email)
                 .returnDate(LocalDate.now().plusDays(7))
@@ -60,24 +59,16 @@ public class BookService {
                 .build();
 
         checkOutRepo.save(checkOut);
-
-
         return book.get();
     }
 
     public Boolean userCart(String email, Long bookId) {
         CheckOut validate = checkOutRepo.findByUserEmailIgnoreCaseAndBookId(email, bookId);
-        if (validate != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return validate != null;
     }
 
     public int userCartSize(String email) {
-
         return checkOutRepo.findByUserEmailIgnoreCase(email).size();
-
     }
 
 }

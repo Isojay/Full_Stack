@@ -20,11 +20,32 @@ public class LoanController {
     private final JwtExtraction jwtExtraction;
 
     @GetMapping
-    public List<Loans> getBookList(@RequestHeader("Authorization")String token){
-        String userEmail =jwtExtraction.extractSubject(token);;
-
+    public List<Loans> getLoanBooks(@RequestHeader("Authorization") String token) {
+        String userEmail = extractUserEmail(token);
         return loanService.returnLoanBooks(userEmail);
+    }
+
+    @PutMapping("/return/{id}")
+    public void returnBook(@RequestHeader("Authorization")String token,@PathVariable long id ){
+        String userEmail = extractUserEmail(token);
+        try{
+            loanService.returnBook(userEmail,id);
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+    @PutMapping("/extend/{id}")
+    public void extendReturnDate(@RequestHeader("Authorization")String token,@PathVariable long id ){
+        String userEmail = extractUserEmail(token);
+        loanService.extendBookDuration(userEmail,id);
+    }
+
+    private String extractUserEmail(String token) {
+        log.info( jwtExtraction.extractSubject(token));
+        return jwtExtraction.extractSubject(token);
 
     }
+
 
 }

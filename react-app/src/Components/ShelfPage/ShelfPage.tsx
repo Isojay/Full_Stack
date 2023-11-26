@@ -1,4 +1,4 @@
-import { Loans } from "./LoanPage";
+import { Loans } from "./Loan/LoanPage";
 
 export const ShelfPage = () => {
   return (
