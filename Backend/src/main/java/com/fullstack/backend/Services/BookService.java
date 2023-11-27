@@ -1,6 +1,5 @@
 package com.fullstack.backend.Services;
 
-
 import com.fullstack.backend.Model.Book;
 import com.fullstack.backend.Model.CheckOut;
 import com.fullstack.backend.Repositories.BookRepo;
@@ -24,7 +23,7 @@ public class BookService {
         return bookRepo.findById(id);
     }
 
-    public Page<Book> findCategoryIDPageSize(long id, Pageable pageable) {
+    public Page<Book> findBookByCategory(long id, Pageable pageable) {
         return bookRepo.findBookByCategory_Id(id, pageable);
     }
 
@@ -37,29 +36,33 @@ public class BookService {
     }
 
     public Book bookCheckout(String email, Long bookId) throws Exception {
-
-        Optional<Book> book = bookRepo.findById(bookId);
-
-        CheckOut validate = checkOutRepo.findByUserEmailIgnoreCaseAndBookId(email, bookId);
-
-        if (book.isEmpty() || validate != null || book.get().getAvailable() <= 0) {
-
-            throw new Exception("Book doesn't exist or already checked out by user");
-
+        Optional<Book> bookOptional = bookRepo.findById(bookId);
+        if (bookOptional.isEmpty()) {
+            throw new Exception("Book doesn't exist");
         }
 
-        book.get().setAvailable(book.get().getAvailable() - 1);
-        bookRepo.save(book.get());
+        Book book = bookOptional.get();
+        if (book.getAvailable() <= 0) {
+            throw new Exception("Book is not available");
+        }
+
+        CheckOut validate = checkOutRepo.findByUserEmailIgnoreCaseAndBookId(email, bookId);
+        if (validate != null) {
+            throw new Exception("Book already checked out by user");
+        }
+
+        book.setAvailable(book.getAvailable() - 1);
+        bookRepo.save(book);
 
         CheckOut checkOut = CheckOut.builder()
                 .userEmail(email)
                 .returnDate(LocalDate.now().plusDays(7))
                 .checkoutDate(LocalDate.now())
-                .bookId(book.get().getId())
+                .bookId(book.getId())
                 .build();
 
         checkOutRepo.save(checkOut);
-        return book.get();
+        return book;
     }
 
     public Boolean userCart(String email, Long bookId) {
@@ -70,5 +73,4 @@ public class BookService {
     public int userCartSize(String email) {
         return checkOutRepo.findByUserEmailIgnoreCase(email).size();
     }
-
 }

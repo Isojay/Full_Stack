@@ -22,27 +22,25 @@ import java.util.Optional;
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("http://localhost:5173")
 public class BookController {
 
     private final BookService bookService;
-    private final CategoryRepo repo;
+    private final CategoryRepo categoryRepo;
     private final JwtExtraction jwtExtraction;
 
     @GetMapping("/category")
     public Page<Category> findCategory(){
         Pageable pageable = PageRequest.of(0,100, Sort.by("cname").ascending());
-        return repo.findAll(pageable);
+        return categoryRepo.findAll(pageable);
     }
 
     @GetMapping("/bookById/{id}")
     public Optional<Book> findById(@PathVariable long id){
         return bookService.findById(id);
-
     }
 
     @GetMapping
-    public Page<Book> findCID(
+    public Page<Book> findBookByCategoryAndKeyword(
             @RequestParam(required = false) Long id,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "2") int size,
@@ -55,7 +53,7 @@ public class BookController {
         if (keyword != null) {
             return bookService.findByKeywordWithAuthor(keyword,keyword, pageable);
         }
-        return bookService.findCategoryIDPageSize(id, pageable);
+        return bookService.findBookByCategory(id, pageable);
     }
 
     @PutMapping("/secure/checkout/{id}")

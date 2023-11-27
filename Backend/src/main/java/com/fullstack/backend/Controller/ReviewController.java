@@ -11,10 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
 @RequiredArgsConstructor
 @RequestMapping("/api/reviews")
-@CrossOrigin("http://localhost:5173")
 public class ReviewController {
 
     private final ReviewService reviewService;

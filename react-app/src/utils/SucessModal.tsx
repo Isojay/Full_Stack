@@ -26,10 +26,14 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ onClose , message })
             <h5 className="modal-title" id="exampleModalLabel">Success!</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
           </div>
-          <div className="modal-body">
+          <div className="modal-body"><br/>
             Your action was successful.
             {message}
           </div>
+          <div className="modal-footer border-0">
+        
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
+      </div>
         </div>
       </div>
     </div>
