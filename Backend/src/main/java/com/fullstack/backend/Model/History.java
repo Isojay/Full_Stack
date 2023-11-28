@@ -21,7 +21,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Book book;
 
     private String userEmail;

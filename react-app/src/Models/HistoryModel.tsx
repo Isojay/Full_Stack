@@ -1,19 +1,24 @@
 import bookModel from "./BookModel";
 import BookModel from "./BookModel";
 
+class HistoryModel {
+  id: number;
 
-class HistoryModel{
+  book: bookModel;
+  checkoutDate: string;
+  returnedDate: string;
 
-    book : bookModel;
-    checkoutDate : string;
-    returnDate : string;
-
-    constructor(book: BookModel, checkoutDate: string, returnDate: string) {
-        this.book = book;
-        this.checkoutDate = checkoutDate;
-        this.returnDate = returnDate;
-    }
+  constructor(
+    id: number,
+    book: BookModel,
+    checkoutDate: string,
+    returnedDate: string
+  ) {
+    this.book = book;
+    this.checkoutDate = checkoutDate;
+    this.returnedDate = returnedDate;
+    this.id = id;
+  }
 }
 
-
-export default  HistoryModel;
+export default HistoryModel;

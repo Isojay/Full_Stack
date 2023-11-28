@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -52,12 +53,22 @@ public class HistoryService {
     }
 
     public void deleteHistoryUser(Long id, String userEmail) {
+        log.info("email : {}",userEmail);
+        log.info("id : {}", id);
+        log.info("we are here");
         if (id == null && userEmail == null) {
             throw new IllegalArgumentException("Both id and userEmail cannot be null.");
         }
 
         if (id == null) {
-            historyRepo.deleteByUserEmailIgnoreCase(userEmail);
+            List<History> histories = historyRepo.findAllByUserEmailIgnoreCase(userEmail);
+            log.info(histories.toString());
+            try{
+            historyRepo.deleteAllByUserEmailIgnoreCase(userEmail);
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
+
             return;
         }
 

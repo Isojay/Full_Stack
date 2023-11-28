@@ -102,8 +102,6 @@ export const SearchPage = () => {
     window.scrollTo(0, 0);
   }, [currentPage, searchUrl]);
 
-  console.log(category);
-
   const indexOfLastBook: number = currentPage * booksPerPage;
   const indexOfFirstBook: number = indexOfLastBook - booksPerPage;
   let lastItem =

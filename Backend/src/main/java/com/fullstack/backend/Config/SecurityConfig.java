@@ -31,8 +31,8 @@ public class SecurityConfig {
                                 .authenticated()
                                 .requestMatchers(
                                         "/api/books/**",
-                                        "/api/reviews/**"
-//                                        "/api/loans/**"
+                                        "/api/reviews/**",
+                                        "/api/history/**"
                                 ).permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())

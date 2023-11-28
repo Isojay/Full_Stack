@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/secure/history")
+@RequestMapping("/api/history")
 @RequiredArgsConstructor
 @Slf4j
 public class HistoryController {
@@ -28,9 +28,11 @@ public class HistoryController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteHistoryById(@RequestParam long id, @RequestParam String userEmail){
+    public ResponseEntity<?> deleteHistoryById(@RequestParam(required = false)  Long id, @RequestParam(required = false)  String userEmail){
         try {
             historyService.deleteHistoryUser(id, userEmail);
+            log.info("email : {}",userEmail);
+            log.info("id : {}", id);
             return ResponseEntity.ok().build();
         }
         catch (Exception e){
