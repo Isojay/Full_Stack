@@ -2,9 +2,9 @@ package com.fullstack.backend.Services;
 
 
 import com.fullstack.backend.DTO.ReviewRequest;
-import com.fullstack.backend.Model.Book;
+import com.fullstack.backend.Model.Book.Book;
 import com.fullstack.backend.Model.Review;
-import com.fullstack.backend.Repositories.BookRepo;
+import com.fullstack.backend.Repositories.BookRepo.BookRepo;
 import com.fullstack.backend.Repositories.ReviewRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

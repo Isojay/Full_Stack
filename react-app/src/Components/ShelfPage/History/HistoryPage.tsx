@@ -15,7 +15,6 @@ export const HistoryPage = () => {
   const [hoveredCardId, setHoveredCardId] = useState(0);
 
   const [deletePrompt, setDeletePrompt] = useState(true);
-  const [deleteHistoryId, setDeleteHistoryId] = useState(0);
 
   const fetchUserHistory = async () => {
     setIsLoading(true);

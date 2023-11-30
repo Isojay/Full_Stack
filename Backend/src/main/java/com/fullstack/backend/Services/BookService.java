@@ -1,8 +1,8 @@
 package com.fullstack.backend.Services;
 
-import com.fullstack.backend.Model.Book;
+import com.fullstack.backend.Model.Book.Book;
 import com.fullstack.backend.Model.CheckOut;
-import com.fullstack.backend.Repositories.BookRepo;
+import com.fullstack.backend.Repositories.BookRepo.BookRepo;
 import com.fullstack.backend.Repositories.CheckOutRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

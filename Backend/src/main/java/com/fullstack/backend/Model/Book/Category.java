@@ -1,4 +1,4 @@
-package com.fullstack.backend.Model;
+package com.fullstack.backend.Model.Book;
 
 
 import jakarta.persistence.*;

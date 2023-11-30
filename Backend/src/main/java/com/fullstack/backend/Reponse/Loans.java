@@ -1,6 +1,6 @@
 package com.fullstack.backend.Reponse;
 
-import com.fullstack.backend.Model.Book;
+import com.fullstack.backend.Model.Book.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

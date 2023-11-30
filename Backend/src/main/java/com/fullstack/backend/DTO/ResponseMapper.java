@@ -1,6 +1,6 @@
 package com.fullstack.backend.DTO;
 
-import com.fullstack.backend.Model.Book;
+import com.fullstack.backend.Model.Book.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

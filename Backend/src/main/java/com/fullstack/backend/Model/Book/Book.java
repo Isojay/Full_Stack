@@ -1,6 +1,7 @@
-package com.fullstack.backend.Model;
+package com.fullstack.backend.Model.Book;
 
 
+import com.fullstack.backend.Model.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

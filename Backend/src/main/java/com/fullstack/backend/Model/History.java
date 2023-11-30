@@ -1,6 +1,7 @@
 package com.fullstack.backend.Model;
 
 
+import com.fullstack.backend.Model.Book.Book;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

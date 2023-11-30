@@ -1,10 +1,10 @@
 package com.fullstack.backend.Services;
 
 
-import com.fullstack.backend.Model.Book;
+import com.fullstack.backend.Model.Book.Book;
 import com.fullstack.backend.Model.CheckOut;
 import com.fullstack.backend.Model.History;
-import com.fullstack.backend.Repositories.BookRepo;
+import com.fullstack.backend.Repositories.BookRepo.BookRepo;
 import com.fullstack.backend.Repositories.CheckOutRepo;
 import com.fullstack.backend.Repositories.HistoryRepo;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -61,17 +60,13 @@ public class HistoryService {
         }
 
         if (id == null) {
-            List<History> histories = historyRepo.findAllByUserEmailIgnoreCase(userEmail);
-            log.info(histories.toString());
             try{
             historyRepo.deleteAllByUserEmailIgnoreCase(userEmail);
             }catch (Exception e){
                 log.error(e.getMessage());
             }
-
             return;
         }
-
         historyRepo.deleteById(id);
     }
 

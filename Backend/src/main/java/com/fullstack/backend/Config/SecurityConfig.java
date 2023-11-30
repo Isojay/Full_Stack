@@ -32,7 +32,8 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/api/books/**",
                                         "/api/reviews/**",
-                                        "/api/history/**"
+                                        "/api/history/**",
+                                        "/api/QnA/**"
                                 ).permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
