@@ -38,7 +38,7 @@
 .lost-image {
   background-image: url("./Images/PublicImages/image-3.jpg");
   height: 25em !important;
-  width: "720";
+  width: 720;
 }
 
 .homepage-carousel-title {
@@ -98,3 +98,28 @@ input[type=radio]{
 }
 
 @media (max-width: 767.98px) { .border-sm-start-none { border-left: none !important; } }
+
+{/*My Css*/}
+.button-template {
+  background-color: skyblue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.loan-title {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.card-container {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+

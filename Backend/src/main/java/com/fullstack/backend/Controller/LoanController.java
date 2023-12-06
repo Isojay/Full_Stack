@@ -1,8 +1,8 @@
 package com.fullstack.backend.Controller;
 
 import com.fullstack.backend.Reponse.Loans;
-import com.fullstack.backend.Services.HistoryService;
-import com.fullstack.backend.Services.LoanService;
+import com.fullstack.backend.Services.BookServices.HistoryService;
+import com.fullstack.backend.Services.BookServices.LoanService;
 import com.fullstack.backend.Utils.JwtExtraction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

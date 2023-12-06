@@ -2,7 +2,7 @@ package com.fullstack.backend.Controller;
 
 import com.fullstack.backend.DTO.ReviewRequest;
 import com.fullstack.backend.Model.Review;
-import com.fullstack.backend.Services.ReviewService;
+import com.fullstack.backend.Services.BookServices.ReviewService;
 import com.fullstack.backend.Utils.JwtExtraction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

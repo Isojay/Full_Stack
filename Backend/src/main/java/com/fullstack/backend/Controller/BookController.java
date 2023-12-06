@@ -3,7 +3,7 @@ package com.fullstack.backend.Controller;
 import com.fullstack.backend.Model.Book.Book;
 import com.fullstack.backend.Model.Book.Category;
 import com.fullstack.backend.Repositories.BookRepo.CategoryRepo;
-import com.fullstack.backend.Services.BookService;
+import com.fullstack.backend.Services.BookServices.BookService;
 import com.fullstack.backend.Utils.JwtExtraction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

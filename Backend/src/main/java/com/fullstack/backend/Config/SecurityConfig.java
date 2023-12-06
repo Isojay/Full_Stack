@@ -1,22 +1,41 @@
 package com.fullstack.backend.Config;
 
-
+import com.fullstack.backend.JWT.JWTAuthenticationFilter;
+import com.fullstack.backend.JWT.JwtAuthenticationEntryPoint;
+import com.fullstack.backend.Services.UserServices.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 import com.okta.spring.boot.oauth.Okta;
-import org.springframework.web.accept.ContentNegotiationStrategy;
-import org.springframework.web.accept.HeaderContentNegotiationStrategy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private static final String API_BOOKS_SECURE = "/api/books/secure/**";
+    private static final String API_REVIEWS_SECURE = "/api/reviews/secure/**";
+    private static final String API_SECURE = "api/secure/**";
+    private static final String API_QnA_SECURE = "/api/QnA/secure/**";
+    private static final String API_BOOKS = "/api/books/**";
+    private static final String API_REVIEWS = "/api/reviews/**";
+    private static final String API_HISTORY = "/api/history/**";
+    private static final String API_QnA = "/api/QnA/**";
+
+    private final UserDetailService userDetailService;
+//    private final JWTAuthenticationFilter jwtAuthFilter;
+//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,29 +43,54 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                         configurer
                                 .requestMatchers(
-                                        "/api/books/secure/**",
-                                        "/api/reviews/secure/**",
-                                        "api/secure/**"
+                                        API_BOOKS_SECURE,
+                                        API_REVIEWS_SECURE,
+                                        API_SECURE,
+                                        API_QnA_SECURE
                                 )
                                 .authenticated()
                                 .requestMatchers(
-                                        "/api/books/**",
-                                        "/api/reviews/**",
-                                        "/api/history/**",
-                                        "/api/QnA/**"
+                                        API_BOOKS,
+                                        API_REVIEWS,
+                                        API_HISTORY,
+                                        API_QnA
                                 ).permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
-                );
+                )
+//                .sessionManagement(session -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authenticationProvider(authenticationProvider())
+//                .exceptionHandling(e -> e
+//                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
 
         http.cors(Customizer.withDefaults());
-        http.setSharedObject(ContentNegotiationStrategy.class, new HeaderContentNegotiationStrategy());
-//      Force a non-empty response body to make unauthorized response body more friendly.
         Okta.configureResourceServer401ResponseBody(http);
 
         http.csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
+
+//    @Bean
+//    public AuthenticationProvider authenticationProvider(){
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setUserDetailsService(userDetailService);
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//
+//        return authenticationProvider;
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//        return config.getAuthenticationManager();
+//    }
 
 }

@@ -1,7 +1,7 @@
 package com.fullstack.backend.Controller;
 
 import com.fullstack.backend.Model.History;
-import com.fullstack.backend.Services.HistoryService;
+import com.fullstack.backend.Services.BookServices.HistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

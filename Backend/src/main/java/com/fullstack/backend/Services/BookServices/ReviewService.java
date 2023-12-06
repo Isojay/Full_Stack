@@ -1,4 +1,4 @@
-package com.fullstack.backend.Services;
+package com.fullstack.backend.Services.BookServices;
 
 
 import com.fullstack.backend.DTO.ReviewRequest;
