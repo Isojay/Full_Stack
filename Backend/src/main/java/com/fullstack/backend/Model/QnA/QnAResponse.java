@@ -26,10 +26,9 @@ public class QnAResponse {
     private String adminEmail;
 
     //Answer
-    private  String response;
+    private String response;
 
     private LocalDate responseDate;
-
 
 
 }

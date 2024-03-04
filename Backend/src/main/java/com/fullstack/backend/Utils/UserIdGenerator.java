@@ -17,10 +17,10 @@ public class UserIdGenerator {
 
         for (int i = 0; i < LENGTH; i++) {
             char randomChar;
-            if(i < 2){
+            if (i < 2) {
                 int randomIndex = random.nextInt(numbers.length());
                 randomChar = numbers.charAt(randomIndex);
-            }else {
+            } else {
                 int randomIndex = random.nextInt(characters.length());
                 randomChar = characters.charAt(randomIndex);
             }

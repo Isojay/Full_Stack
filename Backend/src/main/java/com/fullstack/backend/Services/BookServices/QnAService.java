@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +34,7 @@ public class QnAService {
         return questions.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
-    public void postQuestion(QuestionRequest request){
+    public void postQuestion(QuestionRequest request) {
 
         QnAQuestion question = QnAQuestion
                 .builder()
@@ -52,10 +50,10 @@ public class QnAService {
 
     }
 
-    public void postReply(ResponseRequest request){
+    public void postReply(ResponseRequest request) {
 
         Optional<QnAQuestion> question = questionRepo.findById(request.getId());
-        if(question.isPresent()) {
+        if (question.isPresent()) {
             QnAResponse response = QnAResponse
                     .builder()
                     .response(request.getResponse())
@@ -66,7 +64,7 @@ public class QnAService {
             question.get().setResponse(response);
 
             questionRepo.save(question.get());
-        }else{
+        } else {
             throw new NoDataFoundException("No questions found");
         }
 

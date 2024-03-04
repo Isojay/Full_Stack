@@ -4,8 +4,6 @@ public enum Roles {
 
     ADMIN,
 
-    USER,
-
-    PUBLIC
+    USER
 
 }

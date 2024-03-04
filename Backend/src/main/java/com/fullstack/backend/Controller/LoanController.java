@@ -29,26 +29,26 @@ public class LoanController {
     }
 
     @PutMapping("/return/{id}")
-    public ResponseEntity<Void> returnBook(@RequestHeader("Authorization")String token,@PathVariable long id ){
+    public ResponseEntity<Void> returnBook(@RequestHeader("Authorization") String token, @PathVariable long id) {
         String userEmail = extractUserEmail(token);
-        try{
-            historyService.addToHistory(userEmail,id);
-            loanService.returnBook(userEmail,id);
+        try {
+            historyService.addToHistory(userEmail, id);
+            loanService.returnBook(userEmail, id);
             return ResponseEntity.ok().build();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/extend/{id}")
-    public ResponseEntity<Void> extendReturnDate(@RequestHeader("Authorization")String token,@PathVariable long id ){
+    public ResponseEntity<Void> extendReturnDate(@RequestHeader("Authorization") String token, @PathVariable long id) {
         String userEmail = extractUserEmail(token);
-        try{
-            loanService.extendBookDuration(userEmail,id);
+        try {
+            loanService.extendBookDuration(userEmail, id);
             return ResponseEntity.ok().build();
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }

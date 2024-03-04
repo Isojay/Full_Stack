@@ -3,8 +3,6 @@ package com.fullstack.backend.DTO;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 public class ReviewRequest {
 
@@ -15,7 +13,6 @@ public class ReviewRequest {
     private String reviewDescription;
 
     private String userEmail;
-
 
 
 }

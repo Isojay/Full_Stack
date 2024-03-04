@@ -25,11 +25,11 @@ public class HistoryService {
     private final BookRepo bookRepo;
     private final CheckOutRepo checkOutRepo;
 
-    public Page<History> findByEmail(String userEmail, Pageable pageable){
-        return  historyRepo.findByUserEmailIgnoreCase(userEmail, pageable);
+    public Page<History> findByEmail(String userEmail, Pageable pageable) {
+        return historyRepo.findByUserEmailIgnoreCase(userEmail, pageable);
     }
 
-    public void addToHistory(String userEmail,long bookId){
+    public void addToHistory(String userEmail, long bookId) {
 
         Book book = bookRepo.findById(bookId)
                 .orElseThrow(() -> new NoSuchElementException("Book for the Respective Id not found"));
@@ -52,7 +52,7 @@ public class HistoryService {
     }
 
     public void deleteHistoryUser(Long id, String userEmail) {
-        log.info("email : {}",userEmail);
+        log.info("email : {}", userEmail);
         log.info("id : {}", id);
         log.info("we are here");
         if (id == null && userEmail == null) {
@@ -60,9 +60,9 @@ public class HistoryService {
         }
 
         if (id == null) {
-            try{
-            historyRepo.deleteAllByUserEmailIgnoreCase(userEmail);
-            }catch (Exception e){
+            try {
+                historyRepo.deleteAllByUserEmailIgnoreCase(userEmail);
+            } catch (Exception e) {
                 log.error(e.getMessage());
             }
             return;

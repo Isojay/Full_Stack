@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-public interface HistoryRepo extends JpaRepository<History,Long> {
+public interface HistoryRepo extends JpaRepository<History, Long> {
 
     Page<History> findByUserEmailIgnoreCase(String userEmail, Pageable pageable);
+
     @Modifying
     @Query("DELETE from history where user_email = :userEmail")
     void deleteAllByUserEmailIgnoreCase(@Param("userEmail") String userEmail);

@@ -1,24 +1,14 @@
 package com.fullstack.backend.Config;
 
-import com.fullstack.backend.JWT.JWTAuthenticationFilter;
-import com.fullstack.backend.JWT.JwtAuthenticationEntryPoint;
 import com.fullstack.backend.Services.UserServices.UserDetailService;
+import com.okta.spring.boot.oauth.Okta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.okta.spring.boot.oauth.Okta;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -35,7 +25,7 @@ public class SecurityConfig {
 
     private final UserDetailService userDetailService;
 //    private final JWTAuthenticationFilter jwtAuthFilter;
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+//    private final JwtAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,7 +43,9 @@ public class SecurityConfig {
                                         API_BOOKS,
                                         API_REVIEWS,
                                         API_HISTORY,
-                                        API_QnA
+                                        API_QnA,
+                                        "/actuator",
+                                        "/actuator/*"
                                 ).permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())

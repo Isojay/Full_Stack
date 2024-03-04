@@ -22,20 +22,19 @@ public class HistoryController {
     @GetMapping
     public Page<History> findHistoryByEmail(@RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "5") int size,
-                                            @RequestParam(required = false) String userEmail){
+                                            @RequestParam(required = false) String userEmail) {
         Pageable pageable = PageRequest.of(page, size);
         return historyService.findByEmail(userEmail, pageable);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteHistoryById(@RequestParam(required = false)  Long id, @RequestParam(required = false)  String userEmail){
+    public ResponseEntity<?> deleteHistoryById(@RequestParam(required = false) Long id, @RequestParam(required = false) String userEmail) {
         try {
             historyService.deleteHistoryUser(id, userEmail);
-            log.info("email : {}",userEmail);
+            log.info("email : {}", userEmail);
             log.info("id : {}", id);
             return ResponseEntity.ok().build();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

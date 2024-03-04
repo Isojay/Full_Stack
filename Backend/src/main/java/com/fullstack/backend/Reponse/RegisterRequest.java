@@ -18,6 +18,6 @@ public class RegisterRequest {
 
     private String phNumber;
 
-    private  String password;
+    private String password;
 
 }

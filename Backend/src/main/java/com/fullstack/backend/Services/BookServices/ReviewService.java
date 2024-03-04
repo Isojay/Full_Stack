@@ -57,5 +57,12 @@ public class ReviewService {
         return !(validateReview == null);
     }
 
+    public Boolean deleteReview(int id) {
+
+        reviewRepo.deleteById((long) id);
+        return true;
+
+    }
+
 
 }

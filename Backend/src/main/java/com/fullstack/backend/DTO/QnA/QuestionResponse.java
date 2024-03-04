@@ -25,7 +25,7 @@ public class QuestionResponse {
 
     private String adminEmail;
 
-    private  String response;
+    private String response;
 
     private LocalDate responseDate;
 

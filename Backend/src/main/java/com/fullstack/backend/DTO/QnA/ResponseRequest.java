@@ -9,7 +9,7 @@ public class ResponseRequest {
 
     private String adminEmail;
 
-    private  String response;
+    private String response;
 
 
 }

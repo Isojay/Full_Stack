@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface QnAQuestionRepo extends JpaRepository<QnAQuestion,Long> {
+public interface QnAQuestionRepo extends JpaRepository<QnAQuestion, Long> {
 
     List<QnAQuestion> findAllByClosed(Boolean check);
 

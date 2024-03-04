@@ -13,6 +13,6 @@ public class AuthRequest {
 
     private String phNumber;
 
-    private  String uPassword;
+    private String uPassword;
 
 }

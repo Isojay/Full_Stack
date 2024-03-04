@@ -21,12 +21,12 @@ public class QnAController {
 
     @PostMapping("/secure/saveQuestion")
     public ResponseEntity<String> SaveQuestion(@RequestHeader("Authorization") String token,
-                                               @RequestBody QuestionRequest request){
-        try{
+                                               @RequestBody QuestionRequest request) {
+        try {
             request.setUserEmail(jwtExtraction.extractSubject(token));
             service.postQuestion(request);
             return new ResponseEntity<>("Success", HttpStatus.CREATED);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -34,12 +34,12 @@ public class QnAController {
 
     @PutMapping("/secure/saveResponse")
     public ResponseEntity<String> SaveResponse(@RequestHeader("Authorization") String token,
-                                               @RequestBody ResponseRequest request){
-        try{
+                                               @RequestBody ResponseRequest request) {
+        try {
             request.setAdminEmail(jwtExtraction.extractSubject(token));
             service.postReply(request);
             return new ResponseEntity<>("Success", HttpStatus.CREATED);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

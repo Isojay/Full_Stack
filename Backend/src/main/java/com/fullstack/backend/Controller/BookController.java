@@ -3,7 +3,7 @@ package com.fullstack.backend.Controller;
 import com.fullstack.backend.Model.Book.Book;
 import com.fullstack.backend.Model.Book.Category;
 import com.fullstack.backend.Repositories.BookRepo.CategoryRepo;
-import com.fullstack.backend.Services.BookServices.BookService;
+import com.fullstack.backend.ServiceClass.BookService;
 import com.fullstack.backend.Utils.JwtExtraction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -29,13 +30,13 @@ public class BookController {
     private final JwtExtraction jwtExtraction;
 
     @GetMapping("/category")
-    public Page<Category> findCategory(){
-        Pageable pageable = PageRequest.of(0,100, Sort.by("cname").ascending());
+    public Page<Category> findCategory() {
+        Pageable pageable = PageRequest.of(0, 100, Sort.by("cname").ascending());
         return categoryRepo.findAll(pageable);
     }
 
     @GetMapping("/bookById/{id}")
-    public Optional<Book> findById(@PathVariable long id){
+    public Optional<Book> findById(@PathVariable long id) {
         return bookService.findById(id);
     }
 
@@ -51,13 +52,13 @@ public class BookController {
             return bookService.findByPageSize(pageable);
         }
         if (keyword != null) {
-            return bookService.findByKeywordWithAuthor(keyword,keyword, pageable);
+            return bookService.findByKeywordWithAuthor(keyword, keyword, pageable);
         }
         return bookService.findBookByCategory(id, pageable);
     }
 
     @PutMapping("/secure/checkout/{id}")
-    public ResponseEntity<?> getByEmailAndId(@RequestHeader("Authorization")String token, @PathVariable long id) {
+    public ResponseEntity<?> getByEmailAndId(@RequestHeader("Authorization") String token, @PathVariable long id) {
         String email = jwtExtraction.extractSubject(token);
         try {
             Book book = bookService.bookCheckout(email, id);
@@ -68,17 +69,32 @@ public class BookController {
                     .body("An error occurred: " + errorMessage); // Return an error message as an error response
         }
     }
+
     @GetMapping("/secure/checkout/byUser/{id}")
-    public  boolean checkUserCart(@RequestHeader("Authorization")String token,@PathVariable long id){
+    public boolean checkUserCart(@RequestHeader("Authorization") String token, @PathVariable long id) {
         String email = jwtExtraction.extractSubject(token);
-        return bookService.userCart(email,id);
+        return bookService.userCart(email, id);
     }
 
     @GetMapping("/secure/checkout")
-    public int userCartSize(@RequestHeader("Authorization")String token){
+    public int userCartSize(@RequestHeader("Authorization") String token) {
         String email = jwtExtraction.extractSubject(token);
         return bookService.userCartSize(email);
 
+    }
+
+    @GetMapping("/newArrivals")
+    public ResponseEntity<?> getNewArrivals(    @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "2") int size){
+        try {
+            Page<Book> book = bookService.newArrivals(page, size);
+            return ResponseEntity.ok(book); // Return the book object as a success response
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("An error occurred: " + errorMessage);
+
+        }
     }
 
 }
