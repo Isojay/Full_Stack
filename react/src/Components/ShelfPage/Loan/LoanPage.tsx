@@ -1,19 +1,14 @@
 import {useOktaAuth} from "@okta/okta-react";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import LoanModel from "../../../Models/LoanModel";
 import {SpinnerLoading} from "../../../utils/spinner";
 import image from "../../../Images/BooksImages/book-luv2code-1000.png";
 import {Link} from "react-router-dom";
 import {LoansModal} from "./LoanModal";
 import ServerError from "../../../utils/ServerError.tsx";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
-
-interface Props {
-    onServerError: () => void;
-}
-
-const Loans: React.FC<Props> = ({onServerError}) => {
+const Loans: React.FC = () => {
     const {authState} = useOktaAuth();
     const [httpError, setHttpError] = useState(null);
 
@@ -21,7 +16,6 @@ const Loans: React.FC<Props> = ({onServerError}) => {
     const [isLoadingLoans, setIsLoadingLoans] = useState(true);
 
     const [checkOut, setCheckedOut] = useState(false);
-
 
     useEffect(() => {
         const fetchCurrentUserLoan = async () => {
@@ -71,7 +65,6 @@ const Loans: React.FC<Props> = ({onServerError}) => {
         fetchCurrentUserLoan().catch((error: any) => {
             setIsLoadingLoans(false);
             setHttpError(error.message);
-            onServerError();
         });
         window.scrollTo(0, 0);
     }, [authState, checkOut]);
@@ -81,9 +74,7 @@ const Loans: React.FC<Props> = ({onServerError}) => {
     }
 
     if (httpError) {
-        return (
-            <ServerError/>
-        );
+        return <ServerError/>;
     }
 
     async function returnBook(bookId: number) {
@@ -93,11 +84,11 @@ const Loans: React.FC<Props> = ({onServerError}) => {
             headers: {
                 Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
                 "Content-type": "application/json",
-            }
+            },
         };
         const returnResponse = await fetch(url, requestOptions);
         if (!returnResponse.ok) {
-            throw new Error('Something Went wrong');
+            throw new Error("Something Went wrong");
         }
 
         setCheckedOut(!checkOut);
@@ -105,7 +96,6 @@ const Loans: React.FC<Props> = ({onServerError}) => {
 
         // setShowSuccessModal(true);
         // setServerResponse("Book Returned !!!")
-
     }
 
     async function renewBook(bookId: number) {
@@ -115,11 +105,11 @@ const Loans: React.FC<Props> = ({onServerError}) => {
             headers: {
                 Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
                 "Content-type": "application/json",
-            }
+            },
         };
         const returnResponse = await fetch(url, requestOptions);
         if (!returnResponse.ok) {
-            throw new Error('Something Went wrong');
+            throw new Error("Something Went wrong");
         }
 
         setCheckedOut(!checkOut);
@@ -131,7 +121,6 @@ const Loans: React.FC<Props> = ({onServerError}) => {
 
     return (
         <div>
-            <ToastContainer/>
             <div className="d-none d-lg-block mt-2">
                 {loansDetails.length > 0 ? (
                     <>
@@ -201,8 +190,12 @@ const Loans: React.FC<Props> = ({onServerError}) => {
                                 </div>
                                 <hr/>
 
-                                <LoansModal loanDetail={loansDetail} mobile={false} returnBook={returnBook}
-                                            renewBook={renewBook}/>
+                                <LoansModal
+                                    loanDetail={loansDetail}
+                                    mobile={false}
+                                    returnBook={returnBook}
+                                    renewBook={renewBook}
+                                />
                             </div>
                         ))}
                     </>
@@ -288,17 +281,24 @@ const Loans: React.FC<Props> = ({onServerError}) => {
                                 </div>
 
                                 <hr/>
-                                <LoansModal loanDetail={loansDetail} mobile={true} returnBook={returnBook}
-                                            renewBook={renewBook}/>
-
+                                <LoansModal
+                                    loanDetail={loansDetail}
+                                    mobile={true}
+                                    returnBook={returnBook}
+                                    renewBook={renewBook}
+                                />
                             </div>
                         ))}
                     </>
                 ) : (
                     <>
                         <div className="alert alert-warning mt-3" role="alert">
-                            <h3 className="text-center">Oops! Your library seems to be empty!</h3>
-                            <p className="text-center">Time to embark on a new literary journey!</p>
+                            <h3 className="text-center">
+                                Oops! Your library seems to be empty!
+                            </h3>
+                            <p className="text-center">
+                                Time to embark on a new literary journey!
+                            </p>
                         </div>
                         <div className="d-grid gap-2 mt-3">
                             <Link className="btn btn-primary" to={`search`}>
@@ -309,7 +309,6 @@ const Loans: React.FC<Props> = ({onServerError}) => {
                 )}
             </div>
         </div>
-
     );
 };
 

@@ -1,5 +1,6 @@
 //package com.fullstack.backend.JWT;
 //
+//import com.fullstack.backend.Services.User.Service.UserDetailService;
 //import io.jsonwebtoken.*;
 //import io.jsonwebtoken.io.Decoders;
 //import io.jsonwebtoken.security.Keys;
@@ -11,7 +12,6 @@
 //import org.springframework.stereotype.Service;
 //
 //import java.security.Key;
-//import java.security.SignatureException;
 //import java.util.Collection;
 //import java.util.Date;
 //import java.util.HashMap;
@@ -22,24 +22,32 @@
 //@Slf4j
 //public class JwtService {
 //
+//    private final UserDetailService service;
 //    @Value("${jwt.secret.key}")
 //    private String secretKey;
 //
-//    public String extractUsername(String token) throws Exception {
+//    public JwtService(UserDetailService service) {
+//        this.service = service;
+//    }
+//
+//    public String extractUsername(String token) throws uJwtException {
 //        return extractClaim(token, Claims::getSubject);
 //    }
 //
-//    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) throws Exception {
+//    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) throws uJwtException {
 //        final Claims claims = extractAllClaims(token);
 //        return claimsResolver.apply(claims);
 //    }
 //
-//    public String generateToken(UserDetails userDetails) {
+//    //UserDetails Can be Extracted through user email : userdetailservice in service package
+//    public String generateToken(String username) {
+//        UserDetails userDetails = service.loadUserByUsername(username);
+//
 //        Map<String, Object> claims = new HashMap<>();
 //        Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 //
 //        Map<String, Object> userInfo = new HashMap<>();
-////
+//
 //        userInfo.put("USER_ID", userDetails.getUsername());
 //
 //        userInfo.put("IsAuthenticated", true);
@@ -81,7 +89,7 @@
 //        return extractClaim(token, Claims::getExpiration);
 //    }
 //
-//    private Claims extractAllClaims(String token) throws Exception {
+//    private Claims extractAllClaims(String token) throws uJwtException {
 //        try {
 //            return Jwts.parserBuilder()
 //                    .setSigningKey(getSignInKey())
@@ -92,7 +100,7 @@
 //            throw new ExpiredJwtException(e.getHeader(), e.getClaims(), e.getMessage(), e);
 //        } catch (JwtException e) {
 //            log.error("Error parsing JWT with message: " + e.getMessage());
-//            throw new SignatureException(e.getMessage());
+//            throw new uJwtException(e.getMessage());
 //        }
 //    }
 //

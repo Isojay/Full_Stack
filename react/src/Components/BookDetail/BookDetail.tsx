@@ -10,7 +10,7 @@ import {Reviews} from "./Review/ReviewHandler";
 import {useOktaAuth} from "@okta/okta-react";
 import ReviewRequestModel from "../../Models/ReviewRequesModel";
 import {SimilarBookRecom} from "./SimilarBookRecom";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -39,7 +39,118 @@ export const BookCheckout = () => {
     const [userReviewDeleted, setUserReviewDeleted] = useState(false);
 
     const notify = (message: string) => toast(message);
-    const notifyError = (message: string) => toast.error(message);
+    const notifyError = (message: string) => toast.error(message, {autoClose: 2000});
+
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const baseUrl: string = `http://localhost:8080/api/books/bookById/${id}`;
+
+            const response = await fetch(baseUrl);
+
+            if (!response.ok) {
+                const errorMessage = await response.json();
+                setErrorMsg(errorMessage.message);// Set the error message received from the backend
+                setIsLoading(false);
+                console.log(errorMessage.message); // Log the error message directly
+            } else {
+                const responseData = await response.json();
+                const loadBook: BookModel = {
+                    id: responseData.id,
+                    title: responseData.title,
+                    author: responseData.author,
+                    description: responseData.description,
+                    copies: responseData.copies,
+                    available: responseData.available,
+                    category: responseData.category.cname,
+                    categoryId: responseData.category.id,
+                    imgName: responseData.imgName,
+                };
+
+                SetBook(loadBook);
+                setIsLoading(false);
+
+                if (loadBook.title) {
+                    document.title = `BookishBazaar - ${loadBook.title}`;
+                }
+            }
+        };
+
+        fetchBooks().catch((error: any) => {
+            setIsLoading(false);
+            setErrorMsg(error.message);
+        });
+    }, []);// isCheckedOut removed
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            const reviewUrl: string = `http://localhost:8080/api/reviews/${id}`;
+
+            const reviewResponse = await fetch(reviewUrl);
+            if (!reviewResponse.ok) {
+                throw new Error("Something went Wrong !!");
+            }
+            const reviewJson = await reviewResponse.json();
+
+            const reviewData = reviewJson.content;
+
+            const loadReview: ReviewModel[] = [];
+            const userReview: ReviewModel[] = [];
+
+            let totalRatings: number = 0;
+            if (reviewData.length == 0) {
+                SetTotalStars(0);
+                setTotalReviews(0);
+            }
+            for (const key in reviewData) {
+                console.log(key);
+                //Format date in such a way this only Date is shown
+                const date = new Date(reviewData[key].date);
+                const formattedDate = date.toISOString().split("T")[0];
+
+                if (reviewData[key].userEmail == authState?.idToken?.claims.email) {
+                    userReview.push({
+                        id: reviewData[key].id,
+                        userEmail: reviewData[key].userEmail,
+                        userName: reviewData[key].userName,
+                        date: formattedDate,
+                        rating: reviewData[key].rating,
+                        bookId: reviewData[key].bookId,
+                        reviewDescription: reviewData[key].reviewDescription,
+                    })
+                } else (
+
+                    loadReview.push({
+                        id: reviewData[key].id,
+                        userEmail: reviewData[key].userEmail,
+                        userName: reviewData[key].userName,
+                        date: formattedDate,
+                        rating: reviewData[key].rating,
+                        bookId: reviewData[key].bookId,
+                        reviewDescription: reviewData[key].reviewDescription,
+                    }));
+                setTotalReviews(reviewData.length);
+                totalRatings = totalRatings + reviewData[key].rating;
+                if (reviewData) {
+                    const round = (
+                        Math.round((totalRatings / reviewData.length) * 2) / 2
+                    ).toFixed(1);
+                    SetTotalStars(Number(round));
+                }
+            }
+            setUserReviewPresent(userReview);
+            SetReviews(loadReview);
+            setIsReviewLoading(false);
+            console.log('review called api')
+
+        };
+
+        fetchReviews().catch((error: any) => {
+            setIsReviewLoading(false);
+            setErrorMsg(error.message);
+        });
+
+        window.scrollTo(0, 0);
+    }, [userReviewStatus, userReviewDeleted]);
 
 
     useEffect(() => {
@@ -95,106 +206,6 @@ export const BookCheckout = () => {
     }, [authState, isCheckedOut]);
 
     useEffect(() => {
-        const fetchBooks = async () => {
-            const baseUrl: string = `http://localhost:8080/api/books/bookById/${id}`;
-
-            const response = await fetch(baseUrl);
-
-            if (!response.ok) {
-                throw new Error("Something went wrong !!");
-            }
-            const responseData = await response.json();
-            const loadBook: BookModel = {
-                id: responseData.id,
-                title: responseData.title,
-                author: responseData.author,
-                description: responseData.description,
-                copies: responseData.copies,
-                available: responseData.available,
-                category: responseData.category.cname,
-                categoryId: responseData.category.id,
-                imgName: responseData.imgName,
-            };
-
-            SetBook(loadBook);
-            setIsLoading(false);
-
-            if (loadBook.title) {
-                document.title = `BookishBazaar - ${loadBook.title}`;
-            }
-        };
-        fetchBooks().catch((error: any) => {
-            setIsLoading(false);
-            setErrorMsg(error.message);
-        });
-    }, [isCheckedOut]);
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            const reviewUrl: string = `http://localhost:8080/api/reviews/${id}`;
-
-            const reviewResponse = await fetch(reviewUrl);
-            if (!reviewResponse.ok) {
-                throw new Error("Something went Wrong !!");
-            }
-            const reviewJson = await reviewResponse.json();
-
-            const reviewData = reviewJson.content;
-
-            const loadReview: ReviewModel[] = [];
-            const userReview: ReviewModel[] = [];
-
-            let totalRatings: number = 0;
-
-            for (const key in reviewData) {
-                //Format date in such a way this only Date is shown
-                const date = new Date(reviewData[key].date);
-                const formattedDate = date.toISOString().split("T")[0];
-
-                if (reviewData[key].userEmail == authState?.idToken?.claims.email) {
-                    userReview.push({
-                        id: reviewData[key].id,
-                        userEmail: reviewData[key].userEmail,
-                        userName: reviewData[key].userName,
-                        date: formattedDate,
-                        rating: reviewData[key].rating,
-                        bookId: reviewData[key].bookId,
-                        reviewDescription: reviewData[key].reviewDescription,
-                    })
-                } else (
-
-                    loadReview.push({
-                        id: reviewData[key].id,
-                        userEmail: reviewData[key].userEmail,
-                        userName: reviewData[key].userName,
-                        date: formattedDate,
-                        rating: reviewData[key].rating,
-                        bookId: reviewData[key].bookId,
-                        reviewDescription: reviewData[key].reviewDescription,
-                    }));
-                setTotalReviews(reviewData.length);
-                totalRatings = totalRatings + reviewData[key].rating;
-                if (reviewData) {
-                    const round = (
-                        Math.round((totalRatings / reviewData.length) * 2) / 2
-                    ).toFixed(1);
-                    SetTotalStars(Number(round));
-                }
-            }
-            setUserReviewPresent(userReview);
-
-            SetReviews(loadReview);
-            setIsReviewLoading(false);
-        };
-
-        fetchReviews().catch((error: any) => {
-            setIsReviewLoading(false);
-            setErrorMsg(error.message);
-        });
-        window.scrollTo(0, 0);
-    }, [userReviewStatus, userReviewDeleted]);
-
-    useEffect(() => {
         const fetchUserReviewStatus = async () => {
             if (authState && authState.isAuthenticated) {
                 const url: string = `http://localhost:8080/api/reviews/secure/userReviewStatus?bookId=${id}`;
@@ -208,7 +219,7 @@ export const BookCheckout = () => {
                 const userReviewStatus = await fetch(url, requestOptions);
 
                 if (!userReviewStatus.ok) {
-                    throw new Error("Somthing went wrong!!!");
+                    throw new Error("Something went wrong!!!");
                 }
 
                 const userReviewStatusJson = await userReviewStatus.json();
@@ -233,8 +244,8 @@ export const BookCheckout = () => {
     }
 
     if (errorMSG) {
-        notifyError("An Error has Occurred !!");
-        return <Redirect to="/home" />;
+        notifyError(errorMSG);
+        return <Redirect to="/home"/>;
 
     }
 
@@ -299,10 +310,8 @@ export const BookCheckout = () => {
     }
 
 
-
     return (
         <div>
-            <ToastContainer/>
             <div className="container d-none d-lg-block">
                 <div className="row mt-5">
                     <div className="col-sm-2 col-md-3">

@@ -9,6 +9,8 @@ function Navbar() {
 
     const [logoutPrompt, setLogOutPrompt] = useState(false);
 
+    const [cartSize, setCartSize] = useState(1);
+
     const handleLogout = async () => {
         await oktaAuth.signOut();
         setLogOutPrompt(false);
@@ -38,7 +40,7 @@ function Navbar() {
                         alt=""
                     />
                     <a className="navbar-brand m-2 " href="/home">
-                        Lorem Ipsum
+                        <span> Lorem Ipsum</span>
                     </a>
                     <button
                         className="navbar-toggler"
@@ -76,33 +78,55 @@ function Navbar() {
                                 </li>
                             )}
                         </ul>
-                        <form className="d-flex" role="search">
-                            <input
-                                className="form-control me-2"
-                                type="search"
-                                placeholder="Search"
-                                aria-label="Search"
-                                onChange={(e) => console.log(e.target.value)}
-                            />
-                            <button className="btn btn-outline-success" type="submit">
-                                Search
-                            </button>
-                        </form>
-
-                        {authState.isAuthenticated ? (
-                            <div>
-                                <button
-                                    className="btn btn-secondary text-white m-2"
-                                    onClick={() => setLogOutPrompt(true)}
+                        {/*<form className="d-flex" role="search">*/}
+                        {/*    <input*/}
+                        {/*        className="form-control me-2"*/}
+                        {/*        type="search"*/}
+                        {/*        placeholder="Search"*/}
+                        {/*        aria-label="Search"*/}
+                        {/*        onChange={(e) => console.log(e.target.value)}*/}
+                        {/*    />*/}
+                        {/*    <button className="btn btn-outline-success" type="submit">*/}
+                        {/*        Search*/}
+                        {/*    </button>*/}
+                        {/*</form>*/}
+                        <div className="row align-items-center">
+                            <div className="col-auto">
+                                <div
+                                    className="position-relative"
+                                    style={{marginLeft: "0.5rem"}}
                                 >
-                                    Log Out
-                                </button>
+                                    <i className="fas fa-shopping-cart fa-lg text-muted"></i>
+                                    {cartSize !== 0 && (
+                                        <span
+                                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-black">
+                      {cartSize}
+                                            <span className="visually-hidden">
+                        inbox item numbers
+                      </span>
+                    </span>
+                                    )}
+                                </div>
                             </div>
-                        ) : (
-                            <Link className="btn btn-secondary text-white m-2" to="/login">
-                                Sign In
-                            </Link>
-                        )}
+
+                            <div className="col-auto">
+                                {authState.isAuthenticated ? (
+                                    <button
+                                        className="btn btn-secondary text-white m-2"
+                                        onClick={() => setLogOutPrompt(true)}
+                                    >
+                                        Log Out
+                                    </button>
+                                ) : (
+                                    <Link
+                                        className="btn btn-secondary text-white m-2"
+                                        to="/login"
+                                    >
+                                        Sign In
+                                    </Link>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>

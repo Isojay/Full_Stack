@@ -16,7 +16,6 @@
 //import org.springframework.web.filter.OncePerRequestFilter;
 //
 //import java.io.IOException;
-//import java.security.SignatureException;
 //
 //@Service
 //@RequiredArgsConstructor
@@ -40,11 +39,8 @@
 //        jwt = authHeader.substring(7);
 //        try {
 //            userEmail = jwtService.extractUsername(jwt);
-//        } catch (SignatureException e) {
-//            sendErrorResponse(response, e.getMessage(), "Valid");
-//            return;
 //        } catch (ExpiredJwtException e) {
-//            sendErrorResponse(response, "The JWT Token is Expired", "Time Out");
+//            sendErrorResponse(response);
 //            return;
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
@@ -70,10 +66,10 @@
 //        filterChain.doFilter(request, response);
 //    }
 //
-//    private void sendErrorResponse(HttpServletResponse response, String message, String cause) throws IOException {
+//    private void sendErrorResponse(HttpServletResponse response) throws IOException {
 //        int responseStatus;
 //
-//        if ("Time Out".equals(cause)) {
+//        if ("Time Out".equals("Time Out")) {
 //            responseStatus = HttpServletResponse.SC_REQUEST_TIMEOUT;
 //        } else {
 //            responseStatus = HttpServletResponse.SC_UNAUTHORIZED;
@@ -82,7 +78,7 @@
 //        response.setContentType("application/json");
 //        response.setStatus(responseStatus);
 //
-//        String jsonResponse = String.format("{\"error\": \"%s\"}", message);
+//        String jsonResponse = String.format("{\"error\": \"%s\"}", "The JWT Token is Expired");
 //        response.getOutputStream().println(jsonResponse);
 //    }
 //}

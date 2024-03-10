@@ -82,7 +82,8 @@ export const LoansModal: React.FC<{
                                         onClick={() => props.renewBook(props.loanDetail.book.id)}
                                         data-bs-dismiss="modal"
                                         className={
-                                            props.loanDetail.daysLeft < 0 || props.loanDetail.daysLeft > 6
+                                            props.loanDetail.daysLeft < 0 ||
+                                            props.loanDetail.daysLeft > 6
                                                 ? "list-group-item list-group-item-action inactiveLink"
                                                 : "list-group-item list-group-item-action"
                                         }

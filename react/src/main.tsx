@@ -4,12 +4,12 @@ import App from './App'
 import "./css/SimilarBookRecomCSS.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
-
-// import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
+        <ToastContainer/>
         <App/>
     </BrowserRouter>,
 )

@@ -6,7 +6,7 @@
     - Implement by fetching newly uploaded items from the admin.
 
 * **Top Reads**
-  - Using the history and loan create a top pick.
+    - Using the history and loan create a top pick.
 
 * **Add Recommendation Algorithm**
     - Research and implement a recommendation algorithm for improved user experience.

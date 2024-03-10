@@ -1,6 +1,6 @@
 package com.fullstack.backend.Config;
 
-import com.fullstack.backend.Services.UserServices.UserDetailService;
+import com.fullstack.backend.Services.User.Service.UserDetailService;
 import com.okta.spring.boot.oauth.Okta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

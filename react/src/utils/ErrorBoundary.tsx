@@ -1,6 +1,6 @@
 // ErrorBoundary.tsx
 
-import {Component, ErrorInfo, ReactNode} from 'react';
+import {Component, ReactNode} from 'react';
 import ServerError from './ServerError'; // Import your ServerError component
 
 interface ErrorBoundaryProps {

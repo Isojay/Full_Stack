@@ -5,6 +5,7 @@ import {SearchBook} from "./SearchBookIndividual";
 import {Pagination} from "../../utils/pagination";
 import CategoryModel from "../../Models/CategoryModel";
 import {Link} from "react-router-dom";
+
 export const SearchPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -30,42 +31,56 @@ export const SearchPage = () => {
         try {
             const baseUrl = "http://localhost:8080/api/books";
             let url;
-            if (selectedCategory == "All") {
-                url = searchUrl === "" ? `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}` : `${baseUrl}${searchUrl.replace("<pageNumber>", `${currentPage - 1}`)}`;
+            if (selectedCategory === "All") {
+                url =
+                    searchUrl === ""
+                        ? `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`
+                        : `${baseUrl}${searchUrl.replace(
+                            "<pageNumber>",
+                            `${currentPage - 1}`
+                        )}`;
             } else {
-                url = searchUrl === "" ? `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}` : `${baseUrl}${searchUrl.replace("<pageNumber>", `${currentPage - 1}`)}`;
+                url =
+                    searchUrl === ""
+                        ? `${baseUrl}?page=${
+                            currentPage - 1
+                        }&size=${booksPerPage}&category=${selectedCategory}`
+                        : `${baseUrl}${searchUrl.replace(
+                            "<pageNumber>",
+                            `${currentPage - 1}`
+                        )}&category=${selectedCategory}`;
             }
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error("Failed to fetch datas");
-            }
 
             const data = await response.json();
+            console.log(data);
             setTotalBooks(data.totalElements);
             setCurrentPage(data.number + 1);
             setBooksPerPage(data.size);
             setTotalPages(data.totalPages);
 
-            const loadedBooks = data.content.map((item: {
-                id: any;
-                title: any;
-                author: any;
-                description: any;
-                copies: any;
-                available: any;
-                category: { cname: any; id: any; };
-                imgName: any;
-            }) => ({
-                id: item.id,
-                title: item.title,
-                author: item.author,
-                description: item.description,
-                copies: item.copies,
-                available: item.available,
-                category: item.category.cname,
-                categoryId: item.category.id,
-                imgName: item.imgName,
-            }));
+            const loadedBooks = data.content.map(
+                (item: {
+                    id: any;
+                    title: any;
+                    author: any;
+                    description: any;
+                    copies: any;
+                    available: any;
+                    category: { cname: any; id: any };
+                    imgName: any;
+                }) => ({
+                    id: item.id,
+                    title: item.title,
+                    author: item.author,
+                    description: item.description,
+                    copies: item.copies,
+                    available: item.available,
+                    category: item.category.cname,
+                    categoryId: item.category.id,
+                    imgName: item.imgName,
+                })
+            );
             setBooks(loadedBooks);
         } catch (error: any) {
             setError(error.message);
@@ -81,10 +96,12 @@ export const SearchPage = () => {
                 throw new Error("Failed to fetch categories");
             }
             const data = await response.json();
-            setCategories(data.content.map((category: { id: any; cname: any; }) => ({
-                id: category.id,
-                cname: category.cname,
-            })));
+            setCategories(
+                data.content.map((category: { id: any; cname: any }) => ({
+                    id: category.id,
+                    cname: category.cname,
+                }))
+            );
         } catch (error: any) {
             setError(error.message);
         }
@@ -92,7 +109,10 @@ export const SearchPage = () => {
 
     const indexOfLastBook = currentPage * booksPerPage;
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
-    const lastItem = booksPerPage * currentPage <= totalBooks ? booksPerPage * currentPage : totalBooks;
+    const lastItem =
+        booksPerPage * currentPage <= totalBooks
+            ? booksPerPage * currentPage
+            : totalBooks;
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -139,10 +159,7 @@ export const SearchPage = () => {
                             onChange={(e) => setSearchKeyword(e.target.value)}
                             value={searchKeyword}
                         />
-                        <button
-                            className="btn btn-outline-success"
-                            onClick={searchHandler}
-                        >
+                        <button className="btn btn-outline-success" onClick={searchHandler}>
                             Search
                         </button>
                         <button
@@ -161,7 +178,6 @@ export const SearchPage = () => {
                             id="dropdownMenuButton1"
                             aria-expanded="false"
                             style={{minWidth: "125px"}}
-
                         >
                             {selectedCategory}
                         </button>
@@ -169,7 +185,6 @@ export const SearchPage = () => {
                             className="dropdown-menu"
                             aria-labelledby="dropdownMenuButton1"
                             style={{maxHeight: "200px", overflowY: "auto"}}
-
                         >
                             <li onClick={() => setSelectedCategory("All")}>
                                 <a className="dropdown-item" href="#">
@@ -224,4 +239,3 @@ export const SearchPage = () => {
         </div>
     );
 };
-

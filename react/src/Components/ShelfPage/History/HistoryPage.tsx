@@ -113,7 +113,10 @@ export const HistoryPage = () => {
             return (
                 <>
                     <div className="alert alert-warning mt-3" role="alert">
-                        <h3>Whoopsie-daisy! Your reading history is as empty as a library on Mars!</h3>
+                        <h3>
+                            Whoopsie-daisy! Your reading history is as empty as a library on
+                            Mars!
+                        </h3>
                         <p>Time to sprinkle some literary stardust and fill it up!</p>
                     </div>
                     <div className="d-flex justify-content-center mt-3">
@@ -137,7 +140,6 @@ export const HistoryPage = () => {
                     >
                         Clear All
                     </button>
-
                 </div>
 
                 {historyContent.map((history) => (
@@ -160,8 +162,8 @@ export const HistoryPage = () => {
                                     &times;
                                 </button>
                             )}
-                            <div className="row g-0">
-                                <div className="col-md-2">
+                            <div className="row g-0  align-items-center">
+                                <div className="col-md-2 d-flex justify-content-center">
                                     <div className="d-none d-lg-block">
                                         {history.book.imgName ? (
                                             <img
@@ -206,8 +208,12 @@ export const HistoryPage = () => {
 
                                         <div className="row">
                                             <div className="col-md-8">
-                                                <p className="card-text">Checked out on: {history.checkoutDate}</p>
-                                                <p className="card-text">Returned on: {history.returnedDate}</p>
+                                                <p className="card-text">
+                                                    Checked out on: {history.checkoutDate}
+                                                </p>
+                                                <p className="card-text">
+                                                    Returned on: {history.returnedDate}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
